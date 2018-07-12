@@ -497,7 +497,7 @@ a.logo-item{
     display: none;
     padding: 1px 1px 1px 1px;
     position: absolute;
-    top: 30px;
+    top: 28px;
     background-color: #fff;
     box-shadow: 1px 2px 1px rgba(0,0,0,0.1);
     z-index: -1;
@@ -550,32 +550,32 @@ a.logo-item{
 #drophead5:hover #dropdown5{
     display: block;
 }
-#drophead1:hover {
+#drophead1:hover a{
     background-color: #fff;
     height: 40px;
     border: 0px;
     z-index: 22;
-}#drophead2:hover {
+}#drophead2:hover a{
     background-color: #fff;
     height: 40px;
     border: 0;
     z-index: 22;
 }
-#drophead3:hover {
+#drophead3:hover a{
     background-color: #fff;
     height: 40px;
     border: 0;
     z-index: 22;
 }
-#drophead4:hover {
+#drophead4:hover a{
     background-color: #fff;
     height: 40px;
     border: 0;
     z-index: 22;
 }
-#drophead5:hover{
+#drophead5:hover a{
     background-color: #fff;
-    height: 40px;
+    height: 30px;
     border: 0;
     z-index: 22;
 }
@@ -658,39 +658,67 @@ a.logo-item{
 }
 .barcontent{
     border: 1px solid #7a6e6e;
-    height: 34px;
+    height: 35px;
     width: 50px;
     background-color: #7a6e6e;
     display: none;
-    transition: margin-left 0.5s ease-in;
+    transition: margin-left 2s ease-in-out;
 }
 #bar1:hover #barcontent1{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
 }
 #bar2:hover #barcontent2{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
 }
 #bar3:hover #barcontent3{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
 }
 #bar4:hover #barcontent4{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
 }
 #bar5:hover #barcontent5{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
 }
 #bar6:hover #barcontent6{
     display: block;
+    background-color: #e83632;
+    border: 1px solid  #e83632;
     margin-left: -50px;
-
+}
+.footer2content2{
+    width: 1190px;
+    height: 322px;
+    margin: 0 auto;
+    padding: 10px 0;
+}
+.footer2list{
+    text-align: center;
+}
+.footer2list a{
+    color: #666;
+}
+.space2{
+    margin: 0 10px;
+    color: #ccc;
+}
+.copyrights{
+    text-align: center;
+    width: 1190px;
+    height: 146px;
+    color: #999;
 }

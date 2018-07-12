@@ -35,6 +35,48 @@
         margin-left:-780px;
     }
 }
+@keyframes circle1change{
+    0% , 30% {
+        background-color: #e83632;
+    }
+    33.3% , 63.3%{
+        background-color: transparent;
+    }
+    66.6% , 100%{
+        background-color: transparent;
+    }
+}
+#piccircle1{
+    animation: circle1change 9s ease-in infinite alternate;
+}
+@keyframes circle2change{
+    0% , 30%{
+        background-color: transparent;
+    }
+    33.3% , 63.3%{
+        background-color: #e83632;
+    }
+    66.6% , 100%{
+        background-color:transparent;
+    }
+}
+#piccircle2{
+    animation: circle2change 9s ease-in infinite alternate;
+}
+@keyframes circle3change{
+    0% , 30%{
+        background-color: transparent;
+    }
+    33.3% , 63.3%{
+        background-color: transparent;
+    }
+    66.6% , 100%{
+        background-color:#e83632;
+    }
+}
+#piccircle3{
+    animation: circle3change 9s ease-in infinite alternate;
+}
 @keyframes circle1{
     0%,10%{
         background-color: #fff;
