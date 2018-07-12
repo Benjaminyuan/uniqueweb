@@ -1,21 +1,235 @@
 @keyframes changepic {
-    0%,15%{
+    0%,10%{
         margin-left:0px;
     }
-    19%,34%{
+    12.5%,22.5%{
         margin-left:-590px;
     }
-    38%,43%{
+    25%,35%{
         margin-left: -1180px;
     }
-    47%,61%{
+    37.5%,47.5%{
         margin-left: -1770px;
     }
-    65%,80%{
+    50%,60%{
         margin-left: -2360px;
     }
-    84%,100%{
+    62.5%,72.5%{
         margin-left: -2950px;
+    }
+    75%,85%{
+        margin-left: -3540px;
+    }
+    87.5%,100%{
+        margin-left: -4130px;
+    }
+}
+@keyframes circle1{
+    0%,10%{
+        background-color: #fff;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle2{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: #fff;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle3{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: #fff;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle4{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: #fff;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle5{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: #fff;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle6{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: #fff;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle7{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: #fff;
+    }
+    87.5%,100%{
+        background-color: transparent;
+    }
+}
+@keyframes circle8{
+    0%,10%{
+        background-color: transparent;
+    }
+    12.5%,22.5%{
+        background-color: transparent;
+    }
+    25%,35%{
+        background-color: transparent;
+    }
+    37.5%,47.5%{
+        background-color: transparent;
+    }
+    50%,60%{
+        background-color: transparent;
+    }
+    62.5%,72.5%{
+        background-color: transparent;
+    }
+    75%,85%{
+        background-color: transparent;
+    }
+    87.5%,100%{
+        background-color: #fff;
     }
 }
 .slider-main{
@@ -30,7 +244,7 @@
     opacity: 1;
     width: 5900px;
     height: 470px;
-    animation:changepic 12s ease-in-out infinite normal ;
+    animation:changepic 24s ease-in infinite normal ;
 
 }
 .slideritem{
@@ -52,4 +266,50 @@
 .sliderlist a{
     color: #666;
     text-decoration: none;
+}
+.icon-smcircles{
+    position: absolute;
+    justify-content: space-between;
+    left: 46px;
+    bottom: 20px;
+    z-index: 1;
+    width: 152px;
+    height: 18px;
+}
+.icon-smcircle{
+    border:1px solid hsla(0,0%,100%,.4);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+}
+#smcircle1{
+    animation:circle1 24s ease-in-out infinite normal;
+}
+#smcircle2{
+    animation:circle2 24s ease-in-out infinite normal;
+}
+#smcircle3{
+    animation:circle3 24s ease-in-out infinite normal;
+}
+#smcircle4{
+    animation:circle4 24s ease-in-out infinite normal;
+}
+#smcircle5{
+     animation:circle5 24s ease-in-out infinite normal;
+ }
+#smcircle6{
+      animation:circle6 24s ease-in-out infinite normal;
+  }
+#smcircle7{
+       animation:circle7 24s ease-in-out infinite normal;
+   }
+#smcircle8{
+    animation:circle8 24s ease-in-out infinite normal;
+}
+#smcircle1:hover{
+    animation-play-state: paused;
+    background-color: #fff;
+}
+.slider-wrapper:hover{
+    animation-play-state: paused;
 }
