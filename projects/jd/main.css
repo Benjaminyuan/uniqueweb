@@ -301,14 +301,15 @@ a.logo-item{
     top: 50%;
     left: 0;
     width: 100%;
-    height: 1px;
+    height: 2px;
     background:#e83632;
 }
 .recommend-item{
+    position: relative;
     width: 390px;
     height: 450px;
     margin: 0 10px 0 0 ;
-    background-image: url("./pic/00ff91 (3).png");
+    background-color: #fff;
 }
 .rank{
     height: 60px;
@@ -579,6 +580,7 @@ a.logo-item{
     z-index: 22;
 }
 .clsbtn{
+    cursor: pointer;
     position: absolute;
     top: 0px;
     right: 0px;
@@ -586,6 +588,109 @@ a.logo-item{
     width: 30px;
     background-color: #f0f3ef;
 }
-.clsbtn:active .headad{
+.clsbtn:visited + #ad-pic{
     display: none;
+}
+.flash-title a:hover{
+    color: #fff;
+}
+.bigpic{
+    width: 350px;
+    height: 128px;
+    margin-bottom: 20px;
+    background-color:deepskyblue;
+}
+.pic-smslider2{
+    overflow: hidden;
+}
+.smpic{
+    width: 366px;
+    height: 105px;
+
+}
+.smpic-item{
+    width: 105px;
+    height: 105px;
+    margin: 0 8px;
+}
+#smpic1-item1{
+    background-image: url("./pic/phone.jpg");
+}
+#smpic1-item2{
+    background-image: url("./pic/phone3.jpg");
+}
+#smpic1-item3{
+    background-image: url("./pic/phoneear.jpg");
+}
+.pictitle{
+    line-height: 58px;
+    font-size: 18px;
+    text-align: center;
+    color: #222;
+}
+.pic-content{
+    font-size: 14px;
+    height: 36px;
+    line-height: 18px;
+    text-align: center;
+    overflow: hidden;
+    color: #666;
+}
+.rightbar{
+    position: absolute;
+    right: 0;
+    width: 6px;
+    height: 100%;
+    background-color: #7a6e6e;
+}
+.rightbartabs{
+    position: fixed;
+    right: 0px;
+    top: 50%;
+
+}
+.bar{
+    border: 1px solid #7a6e6e;
+    width: 35px;
+    height: 35px;
+    margin-bottom: 2px;
+    background-color: #7a6e6e;
+}
+.barcontent{
+    border: 1px solid #7a6e6e;
+    height: 34px;
+    width: 50px;
+    background-color: #7a6e6e;
+    display: none;
+    transition: margin-left 0.5s ease-in;
+}
+#bar1:hover #barcontent1{
+    display: block;
+    margin-left: -50px;
+
+}
+#bar2:hover #barcontent2{
+    display: block;
+    margin-left: -50px;
+
+}
+#bar3:hover #barcontent3{
+    display: block;
+    margin-left: -50px;
+
+}
+#bar4:hover #barcontent4{
+    display: block;
+    margin-left: -50px;
+
+}
+#bar5:hover #barcontent5{
+    display: block;
+    margin-left: -50px;
+
+}
+#bar6:hover #barcontent6{
+    display: block;
+    margin-left: -50px;
+
 }
