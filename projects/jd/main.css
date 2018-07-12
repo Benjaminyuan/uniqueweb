@@ -93,7 +93,9 @@ a#ad-pic{
 .nav2 li{
     margin-left: 30px;
 }
-.nav2 li a{
+.nav2 li a:hover{
+    color: #e83632;
+}.nav2 li a{
     font-size: 14px;
     color: #333;
 }
@@ -458,6 +460,7 @@ a.logo-item{
     visibility: hidden;
     height: 480px;
     background-color: #56acd7;
+    box-shadow: 1px 2px 1px rgba(0,0,0,0.1);
     position: absolute;
     left: 190px;
     top: 0;
@@ -482,27 +485,91 @@ a.logo-item{
     visibility: visible;
 }
 .dropdown{
-    border: 1px #999 solid;
-    visibility: hidden;
+    border: 1px #ccc solid;
+    display: none;
     padding: 1px 1px 1px 1px;
+    position: absolute;
+    top: 30px;
     background-color: #fff;
+    box-shadow: 1px 2px 1px rgba(0,0,0,0.1);
 }
 #dropdown1{
     width: 280px;
     height: 160px;
-    position: absolute;
-    top: 30px;
-    right: 0px;
-    z-index: 2;
+    left: 0px;
 }
-#drophead1:hover{
+#dropdown2{
+    width: 155px;
+    height: 70px;
+    left: 0px;
+    padding: 10px 0px 10px 15px;
+
+}
+#dropdown3{
+    width: 170px;
+    height: 415px;
+    right: 0px;
+    padding: 10px 0px;
+
+}
+#dropdown4{
+    width: 1190px;
+    height: 180px;
+    right: -103px;
+    padding: 15px 0px;
+}
+#dropdown5{
+    width: 160px;
+    height: 225px;
+    right: 0px;
+}
+.drophead{
+    position: relative;
+    z-index: 21;
+}
+#drophead1:hover #dropdown1{
+    display: block;
+}
+#drophead2:hover #dropdown2{
+    display: block;
+}
+#drophead3:hover #dropdown3{
+    display: block;
+}
+#drophead4:hover #dropdown4{
+    display: block;
+}
+#drophead5:hover #dropdown5{
+    display: block;
+}
+#drophead1:hover {
     background-color: #fff;
     height: 40px;
     border: 0;
-
+    z-index: 22;
+}#drophead2:hover {
+    background-color: #fff;
+    height: 40px;
+    border: 0;
+    z-index: 22;
 }
-#drophead1:hover #dropdown1{
-    visibility: visible;
+#drophead3:hover {
+    background-color: #fff;
+    height: 40px;
+    border: 0;
+    z-index: 22;
+}
+#drophead4:hover {
+    background-color: #fff;
+    height: 40px;
+    border: 0;
+    z-index: 22;
+}
+#drophead5:hover {
+    background-color: #fff;
+    height: 40px;
+    border: 0;
+    z-index: 22;
 }
 
 
