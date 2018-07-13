@@ -1,0 +1,273 @@
+@keyframes pic_1 {
+    0%,12.5%{
+        opacity: 1;
+    }
+    12.5%,22.5%{
+        opacity: 0;
+    }
+    25%,35%{
+        opacity: 0;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic1{
+    animation: pic_1 24s ease-in-out infinite normal;
+}
+@keyframes pic_2 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,25%{
+        opacity: 1;
+    }
+    25%,35%{
+        opacity: 0;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic2{
+    animation: pic_2 24s ease-in-out infinite normal;
+}
+@keyframes pic_3 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,37.5%{
+        opacity: 1;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic3{
+    animation: pic_3 24s ease-in-out infinite normal;
+}
+@keyframes pic_4 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,50%{
+        opacity: 1;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic4{
+    animation: pic_4 24s ease-in-out infinite normal;
+}
+@keyframes pic_5 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,62.5%{
+        opacity: 1;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic5{
+    animation: pic_5 24s ease-in-out infinite normal;
+}
+@keyframes pic_6 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,75.0%{
+        opacity: 1;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic6{
+    animation: pic_6 24s ease-in-out infinite normal;
+}
+@keyframes pic_7 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,72.5%{
+        opacity: 0;
+    }
+    72.5%,87.5%{
+        opacity: 1;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic7{
+    animation: pic_7 24s ease-in-out infinite normal;
+}
+@keyframes pic_8 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,72.5%{
+        opacity: 0;
+    }
+    72.5%,85%{
+        opacity: 0;
+    }
+    85%,100%{
+        opacity: 1;
+    }
+}
+#pic8{
+    animation: pic_8 24s ease-in-out infinite normal;
+}
+.slider-main{
+    height: 470px;
+}
+.sliderlist{
+    margin: 0 auto;
+    width: 590px;
+    overflow: hidden;
+}
+.slider-wrapper{
+    position: relative;
+    opacity: 1;
+    width: 590px;
+    height: 470px;
+    animation:changepic 24s ease-in infinite normal ;
+
+}
+li{
+    list-style: none;
+}
+.slideritem{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 590px;
+    opacity: 0;
+    z-index: 0;
+}
+.piclink{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.sliderlist img{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.sliderlist a{
+    color: #666;
+    text-decoration: none;
+}

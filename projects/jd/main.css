@@ -637,7 +637,7 @@ a.logo-item{
     color: #666;
 }
 .rightbar{
-    position: absolute;
+    position: fixed;
     right: 0;
     width: 6px;
     height: 100%;
@@ -721,4 +721,26 @@ a.logo-item{
     width: 1190px;
     height: 146px;
     color: #999;
+}
+.act_border:before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    width: 340px;
+    height: 420px;
+    border: solid 5px #333;
+    z-index: 0;
+
+}
+@media  (max-width: 800px)
+{
+    #dispear1{
+        display: none;
+    }
+    #dispear2{
+        display: none;
+    }
+}
+#second-clock{
+    animation: second 60s ease-in-out infinite normal;
 }

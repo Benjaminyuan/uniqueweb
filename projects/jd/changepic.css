@@ -1,29 +1,4 @@
-@keyframes changepic {
-    0%,10%{
-        margin-left:0px;
-    }
-    12.5%,22.5%{
-        margin-left:-590px;
-    }
-    25%,35%{
-        margin-left: -1180px;
-    }
-    37.5%,47.5%{
-        margin-left: -1770px;
-    }
-    50%,60%{
-        margin-left: -2360px;
-    }
-    62.5%,72.5%{
-        margin-left: -2950px;
-    }
-    75%,85%{
-        margin-left: -3540px;
-    }
-    87.5%,100%{
-        margin-left: -4130px;
-    }
-}
+
 @keyframes changepic2{
     0% , 30%{
         margin-left: 0px;
@@ -78,7 +53,7 @@
     animation: circle3change 9s ease-in infinite alternate;
 }
 @keyframes circle1{
-    0%,10%{
+    0%,12.5%{
         background-color: #fff;
     }
     12.5%,22.5%{
@@ -107,7 +82,7 @@
     0%,10%{
         background-color: transparent;
     }
-    12.5%,22.5%{
+    10%,25%{
         background-color: #fff;
     }
     25%,35%{
@@ -136,7 +111,7 @@
     12.5%,22.5%{
         background-color: transparent;
     }
-    25%,35%{
+    22.5%,37.5%{
         background-color: #fff;
     }
     37.5%,47.5%{
@@ -165,7 +140,7 @@
     25%,35%{
         background-color: transparent;
     }
-    37.5%,47.5%{
+    35%,50%{
         background-color: #fff;
     }
     50%,60%{
@@ -194,7 +169,7 @@
     37.5%,47.5%{
         background-color: transparent;
     }
-    50%,60%{
+    47.5%,62.5%{
         background-color: #fff;
     }
     62.5%,72.5%{
@@ -223,7 +198,7 @@
     50%,60%{
         background-color: transparent;
     }
-    62.5%,72.5%{
+    60.0%,75%{
         background-color: #fff;
     }
     75%,85%{
@@ -252,7 +227,7 @@
     62.5%,72.5%{
         background-color: transparent;
     }
-    75%,85%{
+    72.5%,87.5%{
         background-color: #fff;
     }
     87.5%,100%{
@@ -281,29 +256,263 @@
     75%,85%{
         background-color: transparent;
     }
-    87.5%,100%{
+    85%,100%{
         background-color: #fff;
     }
 }
-.slider-main{
-    height: 470px;
+@keyframes pic_1 {
+    0%,12.5%{
+        opacity: 1;
+    }
+    12.5%,22.5%{
+        opacity: 0;
+    }
+    25%,35%{
+        opacity: 0;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
 }
-.sliderlist{
-    margin: 0 auto;
-    width: 590px;
-    overflow: hidden;
+#pic1{
+    animation: pic_1 32s ease-in-out infinite normal;
 }
+@keyframes pic_2 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,25%{
+        opacity: 1;
+    }
+    25%,35%{
+        opacity: 0;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic2{
+    animation: pic_2 32s ease-in-out infinite normal;
+}
+@keyframes pic_3 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,37.5%{
+        opacity: 1;
+    }
+    37.5%,47.5%{
+        opacity: 0;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic3{
+    animation: pic_3 32s ease-in-out infinite normal;
+}
+@keyframes pic_4 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,50%{
+        opacity: 1;
+    }
+    50%,60%{
+        opacity: 0;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic4{
+    animation: pic_4 32s ease-in-out infinite normal;
+}
+@keyframes pic_5 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,62.5%{
+        opacity: 1;
+    }
+    62.5%,72.5%{
+        opacity: 0;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic5{
+    animation: pic_5 32s ease-in-out infinite normal;
+}
+@keyframes pic_6 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,75.0%{
+        opacity: 1;
+    }
+    75%,85%{
+        opacity: 0;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic6{
+    animation: pic_6 32s ease-in-out infinite normal;
+}
+@keyframes pic_7 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,72.5%{
+        opacity: 0;
+    }
+    72.5%,87.5%{
+        opacity: 1;
+    }
+    87.5%,100%{
+        opacity: 0;
+    }
+}
+#pic7{
+    animation: pic_7 32s ease-in-out infinite normal;
+}
+@keyframes pic_8 {
+    0%,10%{
+        opacity: 0;
+    }
+    10%,22.5%{
+        opacity: 0;
+    }
+    22.5%,35%{
+        opacity: 0;
+    }
+    35%,47.5%{
+        opacity: 0;
+    }
+    47.5%,60.0%{
+        opacity: 0;
+    }
+    60.0%,72.5%{
+        opacity: 0;
+    }
+    72.5%,85%{
+        opacity: 0;
+    }
+    85%,100%{
+        opacity: 1;
+    }
+}
+#pic8{
+    animation: pic_8 32s ease-in-out infinite normal;
+}
+
+
 .slider-wrapper{
+    margin: 0 auto;
+    cursor: pointer;
+    position: relative;
     opacity: 1;
-    width: 5900px;
+    width: 590px;
     height: 470px;
-    animation:changepic 24s ease-in infinite normal ;
+    overflow: hidden;
 
 }
+li{
+    list-style: none;
+}
 .slideritem{
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 590px;
-    opacity: 1;
+    opacity: 0;
     z-index: 0;
 }
 .piclink{
@@ -320,6 +529,7 @@
     color: #666;
     text-decoration: none;
 }
+
 .icon-smcircles{
     position: absolute;
     justify-content: space-between;
@@ -335,44 +545,71 @@
     width: 8px;
     height: 8px;
 }
+/*.icon-smcircles{*/
+    /*position: absolute;*/
+    /*justify-content: space-between;*/
+    /*left: 46px;*/
+    /*bottom: 20px;*/
+    /*z-index: 1;*/
+    /*width: 152px;*/
+    /*height: 18px;*/
+/*}*/
+.icon-smcircle1{
+    display: inline-block;
+    z-index: 2;
+    position:absolute ;
+    left: 46px;
+    bottom: 20px;
+    border:1px solid hsla(0,0%,100%,.4);
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    margin: 0 5px;
+    clear: right;
+}
 #smcircle1{
-    animation:circle1 24s ease-in-out infinite normal;
+    animation:circle1 32s ease-in-out infinite normal;
 }
 #smcircle2{
-    animation:circle2 24s ease-in-out infinite normal;
+    animation:circle2 32s ease-in-out infinite normal;
 }
 #smcircle3{
-    animation:circle3 24s ease-in-out infinite normal;
+    animation:circle3 32s ease-in-out infinite normal;
 }
 #smcircle4{
-    animation:circle4 24s ease-in-out infinite normal;
+    animation:circle4 32s ease-in-out infinite normal;
 }
 #smcircle5{
-     animation:circle5 24s ease-in-out infinite normal;
+     animation:circle5 32s ease-in-out infinite normal;
  }
 #smcircle6{
-      animation:circle6 24s ease-in-out infinite normal;
+      animation:circle6 32s ease-in-out infinite normal;
   }
 #smcircle7{
-       animation:circle7 24s ease-in-out infinite normal;
+       animation:circle7 32s ease-in-out infinite normal;
    }
 #smcircle8{
-    animation:circle8 24s ease-in-out infinite normal;
+    animation:circle8 32s ease-in-out infinite normal;
 }
-#smcircle1:hover{
+#circles_1:hover div{
     animation-play-state: paused;
-    background-color: #fff;
+    background-color: transparent;
 }
-.slider-wrapper:hover{
+
+#wrap:hover li{
     animation-play-state: paused;
 }
+#wrap:hover div{
+    animation-play-state: paused;
+}
+
 .pic-slider2{
     overflow: hidden;
     width: 390px;
     height:355px;
 }
 .slider-wrapper2{
-    overflow: hidden;
+    overflow: no-display;
     width: 1170px;
     height: 355px;
     animation: changepic2 9s ease-in-out infinite normal;
@@ -381,4 +618,217 @@
     padding: 0 20px;
     width: 390px;
     height: 355px;
+}
+.opacityimg{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: #fff;
+    z-index: 5;
+    width: 340px;
+    height: 200px;
+    margin: 0 30px 20px 30px;
+    opacity: 1;
+}
+.opacityimg img{
+    transition: opacity 0.2s ease-in-out;
+}
+.opacityimg:hover img{
+    opacity: 0.8;
+}
+.shakeimg:hover {
+    animation: shakeimg 0.5s 1 ease-in-out;
+}
+@keyframes shakeimg {
+    0%,50%{
+        height: 101%;
+    }
+    50%,100%{
+        height: 100%;
+    }
+
+}
+@keyframes hour {
+
+}
+@keyframes second {
+    0%,1.66%{
+        content: '59';
+    }
+    1.67%,3.32%{
+        content: '58';
+    }
+    3.33%,4.98%{
+        content: '57';
+    }
+    4.98%,6.67%{
+        content: '56';
+    }
+    6.67%,8.33%{
+        content: "55";
+    }
+    8.33%,11.67%{
+        content: "54";
+    }
+    11.67%,13.33%{
+        content: "53";
+    }
+    13.33%,15%{
+        content: "52";
+    }
+    15.0%,16.67%{
+        content: "51";
+    }
+    16.67%,18.33%{
+        content: "50";
+    }
+    18.33%,20.0%{
+        content: "49";
+    }
+    20.0%,21.67%{
+        content: "48";
+    }
+    21.67%,23.33%{
+        content: "47";
+    }
+    23.33%,25%{
+        content: "46";
+    }
+    25%,26.67%{
+        content: "45";
+    }
+    26.67%,28.33%{
+        content: "44";
+    }
+    28.33%,30%{
+        content: "43";
+    }
+    30%,31.67%{
+        content: "40";
+    }
+
+    31.67%,33.3%{
+        content: "39";
+    }
+    33.3%,35%{
+        content: "38";
+    }
+    35%,36.67%{
+        content: "37";
+    }
+    36.67%,38.33%{
+        content: "36";
+    }
+    38.33%,40%{
+        content: "35";
+    }
+    40.0%,41.67%{
+        content: '34';
+    }
+    41.67%,43.3%{
+         content: "33";
+     }
+    43.3%,45%{
+        content: "32";
+    }
+    45%,46.67%{
+        content: "31";
+    }
+    46.67%,48.33%{
+        content: "30";
+    }
+    48.33%,50%{
+        content: "29";
+    }
+    50%,51.67%{
+        content: "28";
+    }
+    51.67%,53.33%{
+        content: "27";
+    }
+    53.33%,55%{
+        content: "26";
+    }
+    55%,56.67%{
+        content: "26";
+    }
+    56.67%,58.33%{
+        content: "25";
+    }
+    58.33%,60%{
+        content: "24";
+    }
+    60%,61.67%{
+        content: "23";
+    }
+    61.67%,63.33%{
+         content: "22";
+     }
+    63.33%,65%{
+        content: "21";
+    }
+    65%,66.67%{
+         content: "20";
+     }
+    66.67%,68.33%{
+        content: "19";
+    }
+    68.33%,70%{
+         content: "18";
+     }
+    70%,71.67%{
+        content: "17";
+    }
+    71.67%,73.33%{
+         content: "16";
+     }
+    73.33%,75%{
+        content: "15";
+    }
+    75%,76.67%{
+        content: "14";
+    }
+    76.67%,78.33%{
+        content: "13";
+    }
+    78.33%,80%{
+        content: "12";
+    }
+    80.0%,81.67%{
+        content: "11";
+    }
+    81.67%,83.33%{
+        content: "10";
+    }
+    83.33%,85%{
+        content: "10";
+    }
+    85%,86.6%{
+        content: "09";
+    }
+    86.67%,88.33%{
+        content: "07";
+    }
+    88.33%,90%{
+        content: "06";
+    }
+    90%,91.67%{
+        content: "05";
+    }
+    91.67%,93.33%{
+        content: "04";
+    }
+    93.33%,95%{
+        content: "03";
+    }
+    95%,96.67%{
+        content: "02";
+    }
+    96.67%,98.33% {
+        content: "01";
+    }
+    98.33%,100%{
+        content: "00";
+    }
+
 }
