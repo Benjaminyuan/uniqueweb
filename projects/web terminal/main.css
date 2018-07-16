@@ -1,0 +1,25 @@
+body{
+    font-family: monospace;
+    font-size: 14px;
+    color: #999;
+    background-color:black;
+    box-sizing: border-box;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+#inputarea{
+    border: 0;
+    background-color: black;
+    color: #999;
+    border: 0;
+    outline: none;
+    font-size: 14px;
+}
+#username{
+    color: green;
+}
+.icon{
+    color:deepskyblue;
+}
