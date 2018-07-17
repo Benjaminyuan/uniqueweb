@@ -66,7 +66,8 @@ window.onload=function(){
                 console.log(cmdwords);
                 break;
             default:
-                this.next();
+                var add='Commad not found!'
+                this.next(add);
                 break;
         }
     };
@@ -108,10 +109,13 @@ window.onload=function(){
         output.innerHTML='';
         input.value='';
     }
-    handler.prototype.next = function(){
+    handler.prototype.next = function(add){
+         let more = add || '';
+         let morehtml= '<div><span>'+more+'</span></div>';
          let output = document.getElementById("output");
          let addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
-        ':<span class="icon">~</span><span>$ '+input.value+'</span></div>';
+        ':<span class="icon">~</span><span>$ '+input.value+'</span></div>'+
+        morehtml;
         output.innerHTML=output.innerHTML+addcontent;
         input.value='';
     }
