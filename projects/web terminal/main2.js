@@ -15,8 +15,7 @@ window.onload=function(){
         RM:{value:"rm"},
         CAT:{value:"cat"},
         ECHO:{value:"echo"},
-        CLEAR:{value:"clear"},
-        CD:{value:"cd"}
+        CLEAR:{value:"clear"}
     };
     var handler= function(Storage){
         this.cmd ='';
@@ -80,8 +79,9 @@ window.onload=function(){
                 this.clear();
                 console.log(cmdwords);
                 break;
-            case cmdlist.CD.value:
+            case cmdlist.CLEAR.value:
                 this.cd(cmdwords);
+                console.log(cmdwords);
                 this.next();
                 break;
             default:
@@ -143,15 +143,12 @@ window.onload=function(){
     handler.prototype.cd=function(cmdwords){
         let i=0;
         let flag=1;
-        console.log(cmdwords);
-        if(cmdwords.length>1&&cmdwords[1].indexOf('/'))//cd有多层次跳跃
+        if(cmdwords[1].indexOf('/'))//cd有多层次跳跃
         {
-            tempArray=cmdwords[1].split('/');//cd 的文件目录 
+            tempArray=cmdowrds[1].split('/');//cd 的文件目录 
             tempArray1 = this.pos.split('/');//位置
-            console.log(tempArray);
             if(tempArray[0]==='.'){
                 for(i=1;i<tempArray.length;i++){
-                    console.log(tempArray[i] in this.posfile);
                     if(tempArray[i] in this.posfile){
                         console.log(tempArray[i]);
                         this.posfile = this.posfile[tempArray[i]];    
@@ -207,17 +204,14 @@ window.onload=function(){
                     flag=1;//重置flag
             }
         }
-        else if(cmdwords.length>1){
+        else{
             if(cmdwords[1] in this.posfile){
-                this.posfile = this.posfile(cmdowrds[i]); 
+                this.posfile = this.posfile[cmdowrds[i]]; 
                 this.pos+='/'+cmdwords;   
             }
             else{
                 this.more=['Error','the','file','not','exist'];
             }
-        }
-        else{
-            this.more=['Error','the','file','not','exist'];
         }
         
 
@@ -232,16 +226,14 @@ window.onload=function(){
         for(let i=0;i<this.more.length;i++){
             morehtml+='<span>'+this.more[i]+'&emsp;&emsp;</span>';
         }
+        console.log(morehtml);
         morehtml='<div>'+morehtml+'</div>';
+        console.log(this.pos);
         let output = document.getElementById("output");
-        let poshtml=document.getElementById("pos");
         let addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
-        ':<span class="icon">'+poshtml.innerHTML+'</span><span>$ '+input.value+'</span></div>'+
+        ':<span class="icon">'+this.pos+'</span><span>$ '+input.value+'</span></div>'+
         morehtml;
         output.innerHTML=output.innerHTML+addcontent;
-        poshtml.innerHTML=this.pos;
-        // inputHtml.innerHTML=`<span id="username">benjaminfalcon@benjaminfalcon</span>:<span class="icon">${this.pos}</span><span id="dao">&nbsp;$</span>`+
-        // '<input type="text" id="inputarea" autocomplete="off" spellcheck="false">'
         input.value='';
         this.more=[];
     }
