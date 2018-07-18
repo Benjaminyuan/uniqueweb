@@ -23,14 +23,19 @@ window.onload=function(){
         this.more=[];//执行命令网页的显示的结果
         this.myStorage=localStorage;
         this.file={
-            'Desktop':{'application':{'vscode':{},'note':{},'projects':{}}},
-            'Home':{'Desktop':{'application':{'vscode':{},'note':{},'projects':{}}},
-            'Music':{'rap':{},'pop':{}},'project':{'python':{},'js':{}}}      
+            'Desktop':'folder',
+            'Home':'folder',
+            'Music':'folder'      
         };
         this.temp=JSON.stringify(this.file);
         this.myStorage.setItem('file',this.temp);
+        this.myStorage.setItem('Desktop',JSON.stringify({'application':'folder'}));
+        this.myStorage.setItem('application',JSON.stringify({'vscode':'folder','note':'directory','projects':'folder'}));
+        this.myStorage.setItem('Home',JSON.stringify({'Desktop':'folder'}));
+        this.myStorage.setItem('projects',JSON.stringify({'python':'folder','js':'folder'}));
+        this.myStorage.setItem('Music',JSON.stringify({'rap':'folder','pop':'folder'}));
         this.pos='~';//当前路径名
-        this.posfile=this.file;
+        this.posfile=this.file;//文件’指针‘，指向当前目录
     }   
     handler.prototype.handlecmd=function(value){
         var cmdwords = value.trim().split(/\s+/);//处理输入的命令字符串
@@ -150,13 +155,13 @@ window.onload=function(){
             tempArray1 = this.pos.split('/');//位置
             console.log(tempArray);
             if(tempArray[0]==='.'){//形如 ./Desktop的操作处理
-                for(i=1;i<tempArray.length;i++){
+                for(i=1;i<tempArray.length;i++){//检查合法性
                     console.log(tempArray[i] in this.posfile);
-                    if(tempArray[i] in this.posfile){
+                    if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]==='folder'){
                         console.log(tempArray[i]);
-                        this.posfile = this.posfile[tempArray[i]];    
+                        this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));    
                     }
-                    else if(tempArray[1]!==''){//在./后面有东西当时没有匹配成功时进入
+                    else if(tempArray[1]!==''){//在./后面有东西但是没有匹配成功时进入
                         this.more=['Error','the','file','not','exist'];
                         flag=0;
                         break;
@@ -170,18 +175,15 @@ window.onload=function(){
             else if(tempArray[0]==='..'){
                 this.pos=this.pos.replace('/'+tempArray1.pop(),'');//返回上一级
                 console.log(this.pos);//调试
-                this.posfile=this.file;//文件指针的位置
                 console.log(tempArray1);
-                for(i=1;i<tempArray1.length;i++){
-                    this.posfile=this.posfile[tempArray1[i]];
-                }//返回上一级
+                this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
                 if(tempArray[1]!==''){
                     for(i=1;i<tempArray.length;i++){//向下查找目录
-                        if(tempArray[i] in this.posfile){
-                            this.posfile = this.posfile[tempArray[i]];    
+                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]==='folder'){
+                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
                         }
                         else{
-                            this.more=['Error','the','file','not','exist'];
+                            this.more=['Error','the','folder','not','exist'];
                             flag=0;
                             break;
                         } 
@@ -195,11 +197,11 @@ window.onload=function(){
             }
             else{//直接再当前目录下cd的情况
                     for(i=0;i<tempArray.length;i++){//向下查找目录
-                        if(tempArray[i] in this.posfile){
-                        this.posfile = this.posfile[tempArray[i]];    
+                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]==='folder'){
+                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
                         }
                     else{
-                        this.more=['Error','the','file','not','exist'];
+                        this.more=['Error','the','folder','not','exist'];
                         flag=0;
                         break;
                         } 
@@ -211,12 +213,12 @@ window.onload=function(){
             }
         }
         else if(cmdwords.length>1){
-            if(cmdwords[1] in this.posfile){
-                this.posfile = this.posfile(cmdowrds[1]); 
+            if(cmdwords[1] in this.posfile&&this.posfile[cmdwords[1]]==='folder'){
+                this.posfile = JSON.parse(this.myStorage.getItem(cmdwords[1]));//文件指针的位置  
                 this.pos+='/'+cmdwords[1];   
             }
             else{
-                this.more=['Error','the','file','not','exist'];
+                this.more=['Error','the','folder','not','exist'];
             }
         }
         else{
