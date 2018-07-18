@@ -149,31 +149,33 @@ window.onload=function(){
             tempArray=cmdwords[1].split('/');//cd 的文件目录 
             tempArray1 = this.pos.split('/');//位置
             console.log(tempArray);
-            if(tempArray[0]==='.'){
+            if(tempArray[0]==='.'){//形如 ./Desktop的操作处理
                 for(i=1;i<tempArray.length;i++){
                     console.log(tempArray[i] in this.posfile);
                     if(tempArray[i] in this.posfile){
                         console.log(tempArray[i]);
                         this.posfile = this.posfile[tempArray[i]];    
                     }
-                    else{
+                    else if(tempArray[1]!==''){//在./后面有东西当时没有匹配成功时进入
                         this.more=['Error','the','file','not','exist'];
                         flag=0;
                         break;
                     } 
                 }
-                if(flag){
+                if(flag&&tempArray[1]!==''){
                     this.pos+=cmdwords[1].replace('.','');//判断是否出现了文件不存在的情况
                 }
                 flag=1;//重置flag
             }
             else if(tempArray[0]==='..'){
-                this.pos.replace('/'+tempArray1.pop,'');
-                this.posfile=this.file;
+                this.pos=this.pos.replace('/'+tempArray1.pop(),'');//返回上一级
+                console.log(this.pos);//调试
+                this.posfile=this.file;//文件指针的位置
+                console.log(tempArray1);
                 for(i=1;i<tempArray1.length;i++){
                     this.posfile=this.posfile[tempArray1[i]];
                 }//返回上一级
-                if(tempArray.length>1){
+                if(tempArray[1]!==''){
                     for(i=1;i<tempArray.length;i++){//向下查找目录
                         if(tempArray[i] in this.posfile){
                             this.posfile = this.posfile[tempArray[i]];    
@@ -184,40 +186,41 @@ window.onload=function(){
                             break;
                         } 
                     }
-                    if(flag){
-                        this.pos+=cmdwords[1].replace('.','');//判断是否出现了文件不存在的情况
+                    if(flag){//判断是否出现了文件不存在的情况
+                        this.pos+=cmdwords[1].replace('..','');
+                
                     }
                     flag=1;
                 }  
             }
             else{//直接再当前目录下cd的情况
                     for(i=0;i<tempArray.length;i++){//向下查找目录
-                    if(tempArray[i] in this.posfile){
+                        if(tempArray[i] in this.posfile){
                         this.posfile = this.posfile[tempArray[i]];    
-                    }
+                        }
                     else{
                         this.more=['Error','the','file','not','exist'];
                         flag=0;
                         break;
-                    } 
+                        } 
                     }
                     if(flag){
-                    this.pos+=cmdwords[1].replace('.','');//判断是否出现了文件不存在的情况
+                    this.pos=this.pos+'/'+cmdwords[1];//判断是否出现了文件不存在的情况
                     }
                     flag=1;//重置flag
             }
         }
         else if(cmdwords.length>1){
             if(cmdwords[1] in this.posfile){
-                this.posfile = this.posfile(cmdowrds[i]); 
-                this.pos+='/'+cmdwords;   
+                this.posfile = this.posfile(cmdowrds[1]); 
+                this.pos+='/'+cmdwords[1];   
             }
             else{
                 this.more=['Error','the','file','not','exist'];
             }
         }
         else{
-            this.more=['Error','the','file','not','exist'];
+            this.more=['less','arguement'];
         }
         
 
