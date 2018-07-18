@@ -3,7 +3,7 @@ window.onload=function(){
     var mydate = new Date();
     var input=document.getElementById("inputarea");
     input.focus();
-    var tempjson={};//中间变量 用于提取出一层结构的JSON
+    var tempJSON={};//中间变量 用于提取出一层结构的JSON
     var tempArray=[];
     var tempArray1=[];
     var cmdlist={
@@ -19,44 +19,50 @@ window.onload=function(){
         CLEAR:{value:"clear"},
         CD:{value:"cd"}
     };
-    var handler= function(Storage){
+    var Handler= function(Storage){
         this.cmd ='';
+        this.output = document.getElementById("output");
+        this.inputselector = document.getElementById("input");
         this.more=[];//执行命令网页的显示的结果
         this.myStorage=localStorage;
-        this.file={
-            'Desktop':{'type':'folder','authortiy':'drwxr-xr-x',
-                'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-            'Secret':{'type':'folder','authortiy':'drwxr-xr-x',
-                'size':4096,'lastchange':'Apr-28-17:00','hidden':'ture'},
-            'Home':{'type':'folder','authortiy':'drwxr-xr-x',
-                'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-            'Music':{'type':'folder','authortiy':'drwxr-xr-x',
-                'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}      
+        this.file={//文件夹数据结构
+            'Desktop':{'type':'folder','authority':'drwxr-xr-x',
+                'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+            'Secret':{'type':'folder','authority':'drwxr-xr-x',
+                'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'ture'},
+            'Home':{'type':'folder','authority':'drwxr-xr-x',
+                'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+            'Music':{'type':'folder','authority':'drwxr-xr-x',
+                'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}      
         };
         this.temp=JSON.stringify(this.file);
         this.myStorage.setItem('file',this.temp);
-        this.myStorage.setItem('Desktop',JSON.stringify({'application':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}}));
-        this.myStorage.setItem('application',JSON.stringify({'vscode':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-        'note':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-        'projects':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}}));
-        this.myStorage.setItem('Home',JSON.stringify({'Desktop':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}}));
-        this.myStorage.setItem('projects',JSON.stringify({'python':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-        'js':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}}));
-        this.myStorage.setItem('Music',JSON.stringify({'rap':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'},
-        'pop':{'type':'folder','authortiy':'drwxr-xr-x',
-        'size':4096,'lastchange':'Apr-28-17:00','hidden':'false'}}));
-        this.pos='~';//当前路径名
+        this.myStorage.setItem('Desktop',JSON.stringify({'application':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
+        this.myStorage.setItem('application',JSON.stringify({'vscode':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+        'note':{'type':'file','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+        'projects':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
+        this.myStorage.setItem('Home',JSON.stringify({'Desktop':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
+        this.myStorage.setItem('projects',JSON.stringify({'python':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+        'js':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
+        this.myStorage.setItem('Music',JSON.stringify({'rap':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
+            'pop':{'type':'folder','authority':'drwxr-xr-x',
+            'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
+        this.myStorage.setItem('note',JSON.stringify({'content':'go with the wind written by \n '+
+         'mixier','size':40,'lastchange':'','authority':'drwxr-xr-x',
+            'hidden':'false','type':'file'}))
+            //TODO:文件数据结构
+        this.pos='~';//TODO:当前路径名
         this.posfile=this.file;//文件’指针‘，指向当前目录
     }   
-    handler.prototype.handlecmd=function(value){
+    Handler.prototype.handlecmd=function(value){
         var cmdwords = value.trim().split(/\s+/);//处理输入的命令字符串
         console.log(cmdwords);
         switch(cmdwords[0]){
@@ -91,9 +97,9 @@ window.onload=function(){
                 this.next();
                 break;
             case cmdlist.CAT.value:
-                this.cat();
+                this.cat(cmdwords);
                 console.log(cmdwords);
-                this.next();
+                // this.next();
                 break;
             case cmdlist.ECHO.value:
                 this.echo(cmdwords);
@@ -114,44 +120,89 @@ window.onload=function(){
                 break;
         }
     };
-    handler.prototype.rm = function(cmdwords){
-        if(cmdwords.length===2){
+    Handler.prototype.rm = function(cmdwords){
+        if(cmdwords.length===2&&cmdwords[1]!=='-r'){
             if(cmdwords[1] in this.posfile){
                 if(this.pos==='~'){//根目录情况
                     delete this.posfile[cmdwords[1]];
                     console.log(this.posfile)
-                this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
                 }
                 else{
                     console.log(this.posfile)
-                    delete this.posfile[cmdwords];
-                this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
+                    delete this.posfile[cmdwords[1]];
+                    this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                 }
             }
-            else{
-                this.more=['folder','not','exist'];
+            else {
+                    this.more=['folder','not','exist'];
             }
         }
-        else if(cmdwords.length===3){
-
+        else if(cmdwords.length===2&&cmdwords[1]==='-r'){
+                    for(var prop in this.posfile){
+                        this.myStorage.removeItem(prop);
+                    }
+                    this.posfile={};
+                    this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
         }
         else{
             this.more=['less','arguement'];
         }
     }
-    handler.prototype.cat= function(cmdwords){
+    Handler.prototype.cat= function(cmdwords){
+        if(cmdwords.length===2){
+            if(cmdwords[1] in this.posfile&&this.posfile[cmdwords[1]]['type']==='file'){
+               this.more.push(JSON.parse(this.myStorage.getItem(cmdwords[1]))['content']);
+            }
+        }
+        else if(cmdwords.length===3){
+            console.log(cmdwords);
+           if(cmdwords[1]==='>'){
+            //    if(cmdwords[2] in this.posfile&&this.posfile[cmdwords[2]['type']==='file']){
+                   this.addinputarea(cmdwords);
+            //    }
+           }
+        }
         //code
+    };
+    Handler.prototype.addinputarea= function(cmdwords){
+        var textarea=document.createElement("textarea");
+        textarea.className='input-area';
+        this.inputselector.appendChild(textarea);
+        this.inputselector.focus();
+        console.log(cmdwords);
     }
-    handler.prototype.echo=function(cmdwords){
-        //code
-    }
-    handler.prototype.mkdir = function(cmdwords){
+    Handler.prototype.echo=function(cmdwords){
+        if(!('>' in cmdwords)){
+            console.log(cmdwords);
+            cmdwords.shift();
+            this.more=cmdwords;
+        }
+        //未完成
+        else if(cmdwords.indexOf('>')===cmdwords.length-2){
+            if(cmdwords[cmdwords.length-1] in this.posfile){
+                this.posfile[cmdwords.pop]={'type':'file','authority':'drwxr-xr-x','size':0,
+                'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                this.myStorage.setItem(cmdwords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
+                'content':cmdwords[],'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                if(this.pos==='~'){
+                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                }
+                else{
+                    this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
+                }
+            }
+
+        }
+        //为完成
+    };
+    Handler.prototype.mkdir = function(cmdwords){
         if(cmdwords.length===2){
             if(cmdwords[1] in this.posfile){
                 this.more = ['folder','exist','already'];
             }else{
-                this.posfile[cmdwords[1]]={'type':'folder','authortiy':'drwxr-xr-x',
-                'size':'4096','lastchange':`${mydate.toLocaleString().replace(/\/|,/g,'')}`,'hidden':'false'}
+                this.posfile[cmdwords[1]]={'type':'folder','authority':'drwxr-xr-x',
+                'size':'4096','lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
                 if(this.pos==='~'){
                     this.myStorage.setItem('file',JSON.stringify(this.posfile));
                 }
@@ -165,16 +216,34 @@ window.onload=function(){
         }
 
     };
-    handler.prototype.cp = function(cmdwords){
+    Handler.prototype.cp = function(cmdwords){
         //code
     };
-    handler.prototype.touch = function(cmdwords){
+    Handler.prototype.touch = function(cmdwords){
+        if(cmdwords.length===2){
+            if(cmdwords[1] in this.posfile){
+                //code
+            }else{
+                this.posfile[cmdwords[1]]={'type':'file','authority':'drwxr-xr-x',
+                'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                this.myStorage.setItem(cmdwords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x','content':'',
+                'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                if(this.pos==='~'){
+                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                }
+                else{
+                    this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
+                }
+            }
+         }
+        else{
+            this.more=['less','arguement'];
+        }
+    };
+    Handler.prototype.ln = function(cmdword){
         //code
     }
-    handler.prototype.ln = function(cmdword){
-        //code
-    }
-    handler.prototype.ls= function(cmdwords){
+    Handler.prototype.ls= function(cmdwords){
         let key;
         var key1;
         var tempstring='';
@@ -183,20 +252,19 @@ window.onload=function(){
                 if(this.posfile[key]['hidden']==='false'){
                     this.more.push(key); 
                 }
-                console.log(this.more);
             }
         }
         else if(cmdwords[1]=='-l'){
             for(key in this.posfile){
                 if(this.posfile[key]['hidden']==='false'){
                     for(key1 in this.posfile[key]){
-                    tempstring+=this.posfile[key][key1]+'&emsp;';
+                        if(key1!=='hidden')
+                        tempstring+=this.posfile[key][key1]+'&emsp;';
                     }
-                    this.more.push(tempstring+key); 
+                    this.more.push(tempstring+key+'\n'); 
                     tempstring=''; 
                     }
                 }
-            console.log(this.more);
         }
         else if(cmdwords[1]==='-a'){
             for(key in this.posfile){
@@ -210,7 +278,7 @@ window.onload=function(){
             }
         }
      };
-    handler.prototype.cd=function(cmdwords){
+    Handler.prototype.cd=function(cmdwords){
         let i=0;
         let flag=1;
         console.log(cmdwords);
@@ -292,33 +360,31 @@ window.onload=function(){
         
 
     }
-    handler.prototype.clear = function (){
-        let output = document.getElementById("output");
-        output.innerHTML='';
+    Handler.prototype.clear = function (){
+        this.output.innerHTML='';
         input.value='';
-    }
-    handler.prototype.next = function(){
+    };
+    Handler.prototype.next = function(){
         let morehtml='';
         for(let i=0;i<this.more.length;i++){
-            morehtml+='<span>'+this.more[i]+'&emsp;&emsp;</span>';
+            morehtml+='<span>'+this.more[i].replace(/\n/,'<br>')+'&emsp;&emsp;</span>';
         }
         morehtml='<div>'+morehtml+'</div>';
-        let output = document.getElementById("output");
         let poshtml=document.getElementById("pos");
         let addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
         ':<span class="icon">'+poshtml.innerHTML+'</span><span>$ '+input.value+'</span></div>'+
         morehtml;
-        output.innerHTML=output.innerHTML+addcontent;
+        this.output.innerHTML=this.output.innerHTML+addcontent;
         poshtml.innerHTML=this.pos;
         // inputHtml.innerHTML=`<span id="username">benjaminfalcon@benjaminfalcon</span>:<span class="icon">${this.pos}</span><span id="dao">&nbsp;$</span>`+
         // '<input type="text" id="inputarea" autocomplete="off" spellcheck="false">'
         input.value='';
         this.more=[];
     }
-    var myhandler = new handler();
+    var myHandler = new Handler();
     input.addEventListener("keydown",function(event){
         if(event.keyCode == 13){
-            myhandler.handlecmd(input.value);
+            myHandler.handlecmd(input.value);
         }
     })
 };
