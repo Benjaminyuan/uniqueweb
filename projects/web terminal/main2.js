@@ -3,9 +3,12 @@ window.onload=function(){
     var mydate = new Date();
     var input=document.getElementById("inputarea");
     input.focus();
-    var tempJSON={};//中间变量 用于提取出一层结构的JSON
+    var tempJSON={};
+    //中间变量 用于提取出一层结构的JSON
     var tempArray=[];
     var tempArray1=[];
+    var tempPos='';
+    //中间变量 存储当前的this.pos
     var cmdlist={
         LS:{value:"ls",},
         RM:{value:"remove",},
@@ -114,6 +117,9 @@ window.onload=function(){
                 this.cd(cmdwords);
                 this.next();
                 break;
+            case '':
+                this.next();
+                break;
             default:
                 this.more=['Commad','not','found!'];
                 this.next();
@@ -173,28 +179,27 @@ window.onload=function(){
         console.log(cmdwords);
     }
     Handler.prototype.echo=function(cmdwords){
-        if(!('>' in cmdwords)){
+        console.log(">" in cmdwords);
+        if(!(cmdwords.search('>'))){
             console.log(cmdwords);
             cmdwords.shift();
             this.more=cmdwords;
         }
         //未完成
         else if(cmdwords.indexOf('>')===cmdwords.length-2){
-            if(cmdwords[cmdwords.length-1] in this.posfile){
                 this.posfile[cmdwords.pop]={'type':'file','authority':'drwxr-xr-x','size':0,
                 'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
                 this.myStorage.setItem(cmdwords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
-                'content':cmdwords[],'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                'content':cmdwords[1,cmdwords.length-2].join(),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
                 if(this.pos==='~'){
                     this.myStorage.setItem('file',JSON.stringify(this.posfile));
                 }
                 else{
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                 }
-            }
 
         }
-        //为完成
+        //未完成
     };
     Handler.prototype.mkdir = function(cmdwords){
         if(cmdwords.length===2){
@@ -282,68 +287,133 @@ window.onload=function(){
         let i=0;
         let flag=1;
         console.log(cmdwords);
-        if(cmdwords.length>1&&cmdwords[1].indexOf('/'))//cd有多层次跳跃
+        if(cmdwords.length>1&&cmdwords[1].match(/\//))//cd有多层次跳跃
         {
             tempArray=cmdwords[1].split('/');//cd 的文件目录 
             tempArray1 = this.pos.split('/');//位置
+            tempJSON = this.posfile;
+            tempPos=this.pos;//暂时存储当前文件信息
             console.log(tempArray);
-            if(tempArray[0]==='.'){//形如 ./Desktop的操作处理
-                for(i=1;i<tempArray.length;i++){//检查合法性
+            if(tempArray[0]==='.'||tempArray[0]==='..'){//形如 ./Desktop的操作处理
+                for(i=0;i<tempArray.length;i++){//检查合法性
+                    console.log(this.posfile);
                     console.log(tempArray[i] in this.posfile);
                     if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
                         console.log(tempArray[i]);
-                        this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));    
+                        this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));  
+                        tempPos+='/'+tempArray[i]; 
                     }
-                    else if(tempArray[1]!==''){//在./后面有东西但是没有匹配成功时进入
+                    else if(tempArray[i]==='..'&&tempPos!='~')
+                    {   
+                        tempPos=tempPos.replace('/'+tempArray1.pop(),'');//返回上一级
+                        console.log(tempPos);//调试
+                        console.log(tempArray1);
+                        if(tempArray1.length==1){
+                            //根目录情况
+                            this.posfile = JSON.parse(this.myStorage.getItem('file'));
+                        }else{
+                            //不在根目录
+                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));
+                        }    
+                    }
+                    else if(tempArray[i]==='.'){
+                            //在当前目录，无须改变
+                            //调试
+                        console.log(tempArray1);
+                    }
+                    else if(tempArray[i]!==''){
+                        //在./后面有东西但是没有匹配成功时进入
                         this.more=['Error','the','file','not','exist'];
                         flag=0;
                         break;
                     } 
                 }
-                if(flag&&tempArray[1]!==''){
-                    this.pos+=cmdwords[1].replace('.','');//判断是否出现了文件不存在的情况
+                if(flag){
+                    this.pos=tempPos;
+                    //判断是否出现了文件不存在的情况,该情况为存在
+                }
+                else{
+                    this.posfile=tempJSON;
+                    //出现文件不存在的情况
                 }
                 flag=1;//重置flag
             }
-            else if(tempArray[0]==='..'){
-                this.pos=this.pos.replace('/'+tempArray1.pop(),'');//返回上一级
-                console.log(this.pos);//调试
-                console.log(tempArray1);
-                this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
-                if(tempArray[1]!==''){
-                    for(i=1;i<tempArray.length;i++){//向下查找目录
-                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
-                        }
-                        else{
-                            this.more=['Error','the','folder','not','exist'];
-                            flag=0;
-                            break;
-                        } 
-                    }
-                    if(flag){//判断是否出现了文件不存在的情况
-                        this.pos+=cmdwords[1].replace('..','');
+            // else if(tempArray[0]==='..'){
+            //     tempPos=tempPos.replace('/'+tempArray1.pop(),'');//返回上一级
+            //     console.log(tempPos);//调试
+            //     console.log(tempArray1);
+            //     this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
+            //     for(i=1;i<tempArray.length;i++){
+            //         //检查合法性
+            //         console.log(tempArray[i] in this.posfile);
+            //         if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+            //             console.log(tempArray[i]);
+            //             this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));    
+            //         }
+            //         else if(tempArray[i]==='.')
+            //         {
+            //             //在当前目录，无须改变
+            //             console.log(this.pos);//调试
+            //             console.log(tempArray1);
+                        
+            //         }
+            //         else if(tempArray[i]!==''){
+            //             //在../后面有东西但是没有匹配成功时进入
+            //             this.more=['Error','the','file','not','exist'];
+            //             flag=0;
+            //             break;
+            //         } 
+            //     }
+            //     if(flag&&tempArray[1]!==''){
+            //         this.pos+=cmdwords[1].replace('.','');
+            //         //判断是否出现了文件不存在的情况
+            //     }
+            //     else{
+            //         this.posfile=tempJSON;
+            //         //出现文件不存在的情况
+            //     }
+            //     flag=1;//重置flag
+            //     this.pos=this.pos.replace('/'+tempArray1.pop(),'');//返回上一级
+            //     console.log(this.pos);//调试
+            //     console.log(tempArray1);
+            //     this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
+            //     if(tempArray[1]!==''){
+            //         for(i=1;i<tempArray.length;i++){//向下查找目录
+            //             if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+            //                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
+            //             }
+            //             else{
+            //                 this.more=['Error','the','folder','not','exist'];
+            //                 flag=0;
+            //                 break;
+            //             } 
+            //         }
+            //         if(flag){//判断是否出现了文件不存在的情况
+            //             this.pos+=cmdwords[1].replace('..','');
                 
-                    }
-                    flag=1;
-                }  
-            }
-            else{//直接再当前目录下cd的情况
-                    for(i=0;i<tempArray.length;i++){//向下查找目录
-                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
-                        }
-                    else{
-                        this.more=['Error','the','folder','not','exist'];
-                        flag=0;
-                        break;
-                        } 
-                    }
-                    if(flag){
-                    this.pos=this.pos+'/'+cmdwords[1];//判断是否出现了文件不存在的情况
-                    }
-                    flag=1;//重置flag
-            }
+            //         }
+            //         flag=1;
+            //     }  
+            // }
+            // else{//直接再当前目录下cd的情况
+            //         for(i=0;i<tempArray.length;i++){//向下查找目录
+            //             if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+            //                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
+            //             }
+            //         else{
+            //             this.more=['Error','the','folder','not','exist'];
+            //             flag=0;
+            //             break;
+            //             } 
+            //         }
+            //         if(flag){
+            //         this.pos=this.pos+'/'+cmdwords[1];//判断是否出现了文件不存在的情况
+            //         }
+            //         else{
+            //             this.posfile=tempJSON;
+            //         }
+            //         flag=1;//重置flag
+            // }
         }
         else if(cmdwords.length>1){
             if(cmdwords[1] in this.posfile&&this.posfile[cmdwords[1]]['type']==='folder'){
