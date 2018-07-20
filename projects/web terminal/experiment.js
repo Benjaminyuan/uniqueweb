@@ -16,3 +16,4 @@ console.log(text1.match(reg));
 console.log(text2.match(reg));
 console.log(text3.match(reg));
 console.log(text4 === 'file'|'file-ln');
+console.log('~'.split('/'));

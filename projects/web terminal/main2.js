@@ -90,7 +90,7 @@ window.onload=function(){
                 this.next();
                 break;
             case cmdList.CP.value:
-                this.cp();
+                this.cp(cmdWords);
                 console.log(cmdWords);
                 this.next();
                 break;
@@ -230,7 +230,65 @@ window.onload=function(){
 
     };
     Handler.prototype.cp = function(cmdWords){
-        //code
+        var nowPosition=this.pos;
+        var nowFile = this.posfile;
+        //调用this.cd()会改变this.pos,this.posfile
+        //所以要先保存当前目录信息
+        if(cmdWords.length===3&&cmdWords[1] in this.posfile){
+            //cp file|folder folder 形式
+            this.more=[''];
+            this.cd(['cd',cmdWords[2]]);
+            //寻找转移目录是否存在
+            console.log(nowPosition===this.posifile);
+            if(this.more===['']){//判断是否存在
+            this.posifile[cmdWords[1]]=nowFile[cmdWords[1]];
+            //更新目录信息
+            tempArray= this.pos.split('/');
+            this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
+            }
+            else{
+            this.more=['target-folder','not','exist'];
+            }     
+        }
+        else if(cmdWords.length===4){
+            //cp -r /../../folder /../.../folder 形式
+            if(cmdWords[1]==='-r'){
+                this.more=[''];
+                this.cd(['cd',cmdWords[2]]);
+                //寻找目标目录1是否存在
+                console.log(this.more);
+                if(this.more===['']){
+                //目标目录1存在时进入
+                //先存储目标目录1的信息,然后使this相关的目录信息指向当前目录
+                    tempJSON=this.posfile;
+                    tempPos= this.pos;
+                    this.pos=nowPosition;
+                    this.posfile=nowFile;
+                //--------------------------------
+                //寻找目标目录2是否存在
+                    this.cd(['cd',cmdWords[3]]);
+                    if(this.more===['']){//存在时进入
+                        //UNDO:
+                        // //获取目标文件夹-1的相关信息
+                        // tempArray=tempPos.split('/');
+                        // if(tempArray.length==2){
+                        //     //上一级为根目录情况
+                        //     tempJSON = JSON.parse(this.myStorage.getItem('FILE'));
+                        // }else{
+                        //     //不在根目录
+                        //     tempJSON = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-2]));
+                        // } 
+                        // //--------------------------------------
+                        // //将信息存入目标目录-2
+                        //     this.posfile[tempArray1[tempArray1.length-1]]
+                    }
+
+                }
+                else{
+                this.more=['target-folder-1','not','exist'];
+                }  
+            }
+        }
     };
     Handler.prototype.touch = function(cmdWords){
         if(cmdWords.length===2){
@@ -403,7 +461,7 @@ window.onload=function(){
                         console.log(tempArray1);
                         if(tempArray1.length==1){
                             //根目录情况
-                            this.posfile = JSON.parse(this.myStorage.getItem('file'));
+                            this.posfile = JSON.parse(this.myStorage.getItem('FILE'));
                         }else{
                             //不在根目录
                             this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));
@@ -435,14 +493,34 @@ window.onload=function(){
             }
             else{//直接再当前目录下cd的情况
                     tempJSON= this.posfile;
-                    for(i=0;i<tempArray.length;i++){//向下查找目录
-                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
-                            tempPos+='/'+tempArray[i];    
+                    if(tempArray[0]==='~'){
+                        //如果输入绝对路径，那么先修改目录指针
+                        this.posfile=JSON.parse(this.myStorage.getItem('FILE'));
+                        tempPos='~';
+                        for(i=1;i<tempArray.length;i++){
+                            //向下查找目录
+                            if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+                                this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
+                                tempPos+='/'+tempArray[i];    
+                            }
+                            else{
+                            this.more=['Error','the','folder','not','exist'];
+                            flag=0;
+                            }
                         }
-                        else{
-                        this.more=['Error','the','folder','not','exist'];
-                        flag=0;
+
+                    }
+                    else{
+                        for(i=0;i<tempArray.length;i++){
+                            //向下查找目录
+                            if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+                                this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
+                                tempPos+='/'+tempArray[i];    
+                            }
+                            else{
+                            this.more=['Error','the','folder','not','exist'];
+                            flag=0;
+                            }
                         }
                     }
                     if(flag===1){
@@ -490,7 +568,7 @@ window.onload=function(){
         // inputHtml.innerHTML=`<span id="username">benjaminfalcon@benjaminfalcon</span>:<span class="icon">${this.pos}</span><span id="dao">&nbsp;$</span>`+
         // '<input type="text" id="inputarea" autocomplete="off" spellcheck="false">'
         input.value='';
-        this.more=[];
+        this.more=[''];
     }
     var myHandler = new Handler();
     input.focus();
