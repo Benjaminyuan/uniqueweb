@@ -11,6 +11,8 @@ console.log(reg);
 var text1 = 'cd';
 var text2 = 'cd .././ ';
 var text3 = 'cd adf';
+var text4 = 'file-ln';
 console.log(text1.match(reg));
 console.log(text2.match(reg));
 console.log(text3.match(reg));
+console.log(text4 === 'file'|'file-ln');

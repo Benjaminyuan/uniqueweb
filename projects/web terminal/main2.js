@@ -2,14 +2,13 @@ window.onload=function(){
     var result;
     var mydate = new Date();
     var input=document.getElementById("inputarea");
-    input.focus();
     var tempJSON={};
     //中间变量 用于提取出一层结构的JSON
     var tempArray=[];
     var tempArray1=[];
     var tempPos='';
     //中间变量 存储当前的this.pos
-    var cmdlist={
+    var cmdList={
         LS:{value:"ls",},
         RM:{value:"remove",},
         MKDIR:{value:"mkdir",},
@@ -28,7 +27,7 @@ window.onload=function(){
         this.inputselector = document.getElementById("input");
         this.more=[];//执行命令网页的显示的结果
         this.myStorage=localStorage;
-        this.file={//文件夹数据结构
+        this.FILE={//文件夹数据结构
             'Desktop':{'type':'folder','authority':'drwxr-xr-x',
                 'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
             'Secret':{'type':'folder','authority':'drwxr-xr-x',
@@ -38,13 +37,13 @@ window.onload=function(){
             'Music':{'type':'folder','authority':'drwxr-xr-x',
                 'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}      
         };
-        this.temp=JSON.stringify(this.file);
+        this.temp=JSON.stringify(this.FILE);
         this.myStorage.setItem('file',this.temp);
         this.myStorage.setItem('Desktop',JSON.stringify({'application':{'type':'folder','authority':'drwxr-xr-x',
             'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
         this.myStorage.setItem('application',JSON.stringify({'vscode':{'type':'folder','authority':'drwxr-xr-x',
             'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
-        'note':{'type':'file','authority':'drwxr-xr-x',
+        'note':{'type':'file','pointer':'note','authority':'drwxr-xr-x',
             'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'},
         'projects':{'type':'folder','authority':'drwxr-xr-x',
             'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
@@ -59,62 +58,63 @@ window.onload=function(){
             'pop':{'type':'folder','authority':'drwxr-xr-x',
             'size':4096,'lastchange':'2018/7/18 下午3:36:13','hidden':'false'}}));
         this.myStorage.setItem('note',JSON.stringify({'content':'go with the wind written by \n '+
-         'mixier','size':40,'lastchange':'','authority':'drwxr-xr-x',
+         'mixier','size':40,'lastchange':'','authority':'drwxr-xr-x','ln':['note'],
             'hidden':'false','type':'file'}))
-            //TODO:文件数据结构
+            //当前只有一个指向note文件
+            //TODO:文件数据结构 ln属性的值是一个数组，表示指向其位置的指针，第一项是储存在localStorage的项。
         this.pos='~';//TODO:当前路径名
-        this.posfile=this.file;//文件’指针‘，指向当前目录
+        this.posfile=this.FILE;//文件’指针‘，指向当前目录
     }   
     Handler.prototype.handlecmd=function(value){
-        var cmdwords = value.trim().split(/\s+/);//处理输入的命令字符串
-        console.log(cmdwords);
-        switch(cmdwords[0]){
-            case cmdlist.LS.value:
-                this.ls(cmdwords);
-                console.log(cmdwords);
+        var cmdWords = value.trim().split(/\s+/);//处理输入的命令字符串
+        console.log(cmdWords);
+        switch(cmdWords[0]){
+            case cmdList.LS.value:
+                this.ls(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.MKDIR.value:
-                this.mkdir(cmdwords);
-                console.log(cmdwords);
+            case cmdList.MKDIR.value:
+                this.mkdir(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.TOUCH.value:
-                this.touch(cmdwords);
-                console.log(cmdwords);
+            case cmdList.TOUCH.value:
+                this.touch(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.LN.value:
-                this.ln(cmdwords);
-                console.log(cmdwords);
+            case cmdList.LN.value:
+                this.ln(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.CP.value:
+            case cmdList.CP.value:
                 this.cp();
-                console.log(cmdwords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.RM.value:
-                this.rm(cmdwords);
-                console.log(cmdwords);
+            case cmdList.RM.value:
+                this.rm(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.CAT.value:
-                this.cat(cmdwords);
-                console.log(cmdwords);
+            case cmdList.CAT.value:
+                this.cat(cmdWords);
+                console.log(cmdWords);
                 // this.next();
                 break;
-            case cmdlist.ECHO.value:
-                this.echo(cmdwords);
-                console.log(cmdwords);
+            case cmdList.ECHO.value:
+                this.echo(cmdWords);
+                console.log(cmdWords);
                 this.next();
                 break;
-            case cmdlist.CLEAR.value:
+            case cmdList.CLEAR.value:
                 this.clear();
-                console.log(cmdwords);
+                console.log(cmdWords);
                 break;
-            case cmdlist.CD.value:
-                this.cd(cmdwords);
+            case cmdList.CD.value:
+                this.cd(cmdWords);
                 this.next();
                 break;
             case '':
@@ -126,17 +126,17 @@ window.onload=function(){
                 break;
         }
     };
-    Handler.prototype.rm = function(cmdwords){
-        if(cmdwords.length===2&&cmdwords[1]!=='-r'){
-            if(cmdwords[1] in this.posfile){
+    Handler.prototype.rm = function(cmdWords){
+        if(cmdWords.length===2&&cmdWords[1]!=='-r'){
+            if(cmdWords[1] in this.posfile){
                 if(this.pos==='~'){//根目录情况
-                    delete this.posfile[cmdwords[1]];
+                    delete this.posfile[cmdWords[1]];
                     console.log(this.posfile)
-                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
                     console.log(this.posfile)
-                    delete this.posfile[cmdwords[1]];
+                    delete this.posfile[cmdWords[1]];
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                 }
             }
@@ -144,7 +144,7 @@ window.onload=function(){
                     this.more=['folder','not','exist'];
             }
         }
-        else if(cmdwords.length===2&&cmdwords[1]==='-r'){
+        else if(cmdWords.length===2&&cmdWords[1]==='-r'){
                     for(var prop in this.posfile){
                         this.myStorage.removeItem(prop);
                     }
@@ -155,44 +155,52 @@ window.onload=function(){
             this.more=['less','arguement'];
         }
     }
-    Handler.prototype.cat= function(cmdwords){
-        if(cmdwords.length===2){
-            if(cmdwords[1] in this.posfile&&this.posfile[cmdwords[1]]['type']==='file'){
-               this.more.push(JSON.parse(this.myStorage.getItem(cmdwords[1]))['content']);
+    Handler.prototype.cat= function(cmdWords){
+        if(cmdWords.length===2){
+            //cat filename 的情况
+            if(cmdWords[1] in this.posfile&&this.posfile[cmdWords[1]]['type']==='file'){
+               this.more.push(JSON.parse(this.myStorage.getItem(cmdWords[1]))['content']);
+            }
+            else if(cmdWords[1] in this.posfile&&this.posfile[cmdWords[1]]['type']==='file-ln'){
+                this.more.push(JSON.parse(this.myStorage.getItem(this.posfile[cmdWords[1]]['pointer']))['content']);
+            }
+            else{
+                this.more=['folder','not','exist']
             }
         }
-        else if(cmdwords.length===3){
-            console.log(cmdwords);
-           if(cmdwords[1]==='>'){
-            //    if(cmdwords[2] in this.posfile&&this.posfile[cmdwords[2]['type']==='file']){
-                   this.addinputarea(cmdwords);
-            //    }
+        else if(cmdWords.length===3){
+            // cat > filename 的形式 UNDO
+            console.log(cmdWords);
+           if(cmdWords[1]==='>'){
+                if((cmdWords[2] in this.posfile)&&this.posfile[cmdWords[2]['type']==='file']){
+                   this.addinputarea(cmdWords);
+                }
            }
         }
         //code
     };
-    Handler.prototype.addinputarea= function(cmdwords){
+    Handler.prototype.addinputarea= function(cmdWords){
         var textarea=document.createElement("textarea");
         textarea.className='input-area';
         this.inputselector.appendChild(textarea);
         this.inputselector.focus();
-        console.log(cmdwords);
+        console.log(cmdWords);
     }
-    Handler.prototype.echo=function(cmdwords){
-        console.log(">" in cmdwords);
-        if(!(cmdwords.search('>'))){
-            console.log(cmdwords);
-            cmdwords.shift();
-            this.more=cmdwords;
+    Handler.prototype.echo=function(cmdWords){
+        console.log(">" in cmdWords);
+        if(!(cmdWords.search('>'))){
+            console.log(cmdWords);
+            cmdWords.shift();
+            this.more=cmdWords;
         }
         //未完成
-        else if(cmdwords.indexOf('>')===cmdwords.length-2){
-                this.posfile[cmdwords.pop]={'type':'file','authority':'drwxr-xr-x','size':0,
+        else if(cmdWords.indexOf('>')===cmdWords.length-2){
+                this.posfile[cmdWords.pop]={'type':'file','authority':'drwxr-xr-x','size':0,
                 'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
-                this.myStorage.setItem(cmdwords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
-                'content':cmdwords[1,cmdwords.length-2].join(),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                this.myStorage.setItem(cmdWords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
+                'content':cmdWords[1,cmdWords.length-2].join(),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
                 if(this.pos==='~'){
-                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
@@ -201,15 +209,15 @@ window.onload=function(){
         }
         //未完成
     };
-    Handler.prototype.mkdir = function(cmdwords){
-        if(cmdwords.length===2){
-            if(cmdwords[1] in this.posfile){
+    Handler.prototype.mkdir = function(cmdWords){
+        if(cmdWords.length===2){
+            if(cmdWords[1] in this.posfile){
                 this.more = ['folder','exist','already'];
             }else{
-                this.posfile[cmdwords[1]]={'type':'folder','authority':'drwxr-xr-x',
+                this.posfile[cmdWords[1]]={'type':'folder','authority':'drwxr-xr-x',
                 'size':'4096','lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
                 if(this.pos==='~'){
-                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
@@ -221,49 +229,111 @@ window.onload=function(){
         }
 
     };
-    Handler.prototype.cp = function(cmdwords){
+    Handler.prototype.cp = function(cmdWords){
         //code
     };
-    Handler.prototype.touch = function(cmdwords){
-        if(cmdwords.length===2){
-            if(cmdwords[1] in this.posfile){
+    Handler.prototype.touch = function(cmdWords){
+        if(cmdWords.length===2){
+            if(cmdWords[1] in this.posfile){
                 //code
             }else{
-                this.posfile[cmdwords[1]]={'type':'file','authority':'drwxr-xr-x',
+                this.posfile[cmdWords[1]]={'type':'file','pointer':cmdWords[1],'authority':'drwxr-xr-x','pointer':cmdWords[1],
                 'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
-                this.myStorage.setItem(cmdwords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x','content':'',
+                this.myStorage.setItem(cmdWords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x','ln':[cmdWords[1]],'content':'',
                 'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
                 if(this.pos==='~'){
-                    this.myStorage.setItem('file',JSON.stringify(this.posfile));
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
-                    this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
+                    tempArray= this.pos.split('/');
+                    this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
                 }
             }
          }
-        else{
+        else if(cmdWords.length===1){
             this.more=['less','arguement'];
         }
+        else if(cmdWords.length>=3){
+            this.more=['too','much','arguement'];
+        }
     };
-    Handler.prototype.ln = function(cmdword){
-        //code
-    }
-    Handler.prototype.ls= function(cmdwords){
+    Handler.prototype.ln = function(cmdWords){
+        if(cmdWords.length===3&&!(cmdWords[2] in this.posfile)){
+            //创建硬链接
+            console.log(cmdWords[1]  in this.posfile);
+            if(cmdWords[1] in this.posfile&&this.posfile[cmdWords[1]]['type']==='file'){
+                //更新当前文件目录
+                this.posfile[cmdWords[2]]={'type':'file-ln','pointer':cmdWords[1],'authority':'drwxr-xr-x',
+                'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                if(this.pos==='~'){
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
+                }
+                else{
+                    tempArray= this.pos.split('/');
+                    this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
+                    tempArray='';
+                }
+                //-------------------------------------------------------------------
+                //更新文件的指针数量
+                console.log(this.myStorage.getItem(cmdWords[1]));
+                tempJSON= JSON.parse(this.myStorage.getItem(cmdWords[1]));
+                tempJSON['ln'].push(cmdWords[2]);
+                this.myStorage.setItem(cmdWords[1],tempJSON.stringify);
+                tempJSON={};
+                //----------------------------------------------------------------------
+            }
+            else{
+                this.more=['file','not','exist'];
+            }
+        }
+        else if(cmdWords.length===4&&cmdWords[1]==='-s'){
+            if(cmdWords[2] in this.posfile&&this.posfile[cmdWords[2]]['type']==='file'){
+                //更新当前文件目录
+                this.posfile[cmdWords[3]]={'type':'ln-s','pointer':cmdWords[2],
+                'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                if(this.pos==='~'){
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
+                }
+                else{
+                    tempArray= this.pos.split('/');
+                    this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
+                    tempArray='';
+                }
+            }else if(cmdWords[2] in this.posfile&&this.posfile[cmdWords[2]]['type']==='file-ln'){
+                this.posfile[cmdWords[3]]={'type':'ln-s','pointer':this.posfile[cmdWords[2]]['pointer'],
+                'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                if(this.pos==='~'){
+                    this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
+                }
+                else{
+                    tempArray= this.pos.split('/');
+                    this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
+                    tempArray='';
+                }
+                
+            }
+        }else{
+            this.more=['Please','check','your','arguement'];
+        }
+};
+    Handler.prototype.ls= function(cmdWords){
         let key;
         var key1;
         var tempstring='';
-        if(cmdwords.length === 1){
+        if(cmdWords.length === 1){
             for(key in this.posfile){
                 if(this.posfile[key]['hidden']==='false'){
                     this.more.push(key); 
                 }
             }
         }
-        else if(cmdwords[1]=='-l'){
+        else if(cmdWords[1]=='-l'){
+            this.more.push('');
             for(key in this.posfile){
                 if(this.posfile[key]['hidden']==='false'){
                     for(key1 in this.posfile[key]){
-                        if(key1!=='hidden')
+                        if(key1!=='hidden'&&key1!=='ln'&&key1!=='pointer')
+                        //排除无须输出的内容
                         tempstring+=this.posfile[key][key1]+'&emsp;';
                     }
                     this.more.push(tempstring+key+'\n'); 
@@ -271,7 +341,7 @@ window.onload=function(){
                     }
                 }
         }
-        else if(cmdwords[1]==='-a'){
+        else if(cmdWords[1]==='-a'){
             for(key in this.posfile){
                 if(this.posfile[key]['hidden']==='false'){
                     this.more.push(key); 
@@ -282,14 +352,37 @@ window.onload=function(){
                 console.log(this.more); 
             }
         }
+        else if(cmdWords[1]==='-la'){
+            this.more.push('');
+            //为了对齐。。。。
+            for(key in this.posfile){
+                for(key1 in this.posfile[key]){
+                    if(key1!=='hidden'&&key1!=='ln'&&key1!=='pointer')
+                    //排除无须输出的内容
+                    tempstring+=this.posfile[key][key1]+'&emsp;';
+                }
+                if(this.posfile[key]['hidden']==='false'){
+                    this.more.push(tempstring+key+'\n'); 
+                    tempstring=''; 
+                }
+                else{
+                    this.more.push(tempstring+'.'+key+'\n'); 
+                    tempstring=''; 
+                }
+                console.log(this.more); 
+            }  
+        }
+        else{
+            this.more=['please','check','your','arguement'];
+        }   
      };
-    Handler.prototype.cd=function(cmdwords){
+    Handler.prototype.cd=function(cmdWords){
         let i=0;
         let flag=1;
-        console.log(cmdwords);
-        if(cmdwords.length>1&&cmdwords[1].match(/\//))//cd有多层次跳跃
+        console.log(cmdWords);
+        if(cmdWords.length>1&&cmdWords[1].match(/\//))//cd有多层次跳跃
         {
-            tempArray=cmdwords[1].split('/');//cd 的文件目录 
+            tempArray=cmdWords[1].split('/');//cd 的文件目录 
             tempArray1 = this.pos.split('/');//位置
             tempJSON = this.posfile;
             tempPos=this.pos;//暂时存储当前文件信息
@@ -336,92 +429,40 @@ window.onload=function(){
                     this.posfile=tempJSON;
                     //出现文件不存在的情况
                 }
+                tempPos='';
+                tempJSON={};
                 flag=1;//重置flag
             }
-            // else if(tempArray[0]==='..'){
-            //     tempPos=tempPos.replace('/'+tempArray1.pop(),'');//返回上一级
-            //     console.log(tempPos);//调试
-            //     console.log(tempArray1);
-            //     this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
-            //     for(i=1;i<tempArray.length;i++){
-            //         //检查合法性
-            //         console.log(tempArray[i] in this.posfile);
-            //         if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-            //             console.log(tempArray[i]);
-            //             this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));    
-            //         }
-            //         else if(tempArray[i]==='.')
-            //         {
-            //             //在当前目录，无须改变
-            //             console.log(this.pos);//调试
-            //             console.log(tempArray1);
-                        
-            //         }
-            //         else if(tempArray[i]!==''){
-            //             //在../后面有东西但是没有匹配成功时进入
-            //             this.more=['Error','the','file','not','exist'];
-            //             flag=0;
-            //             break;
-            //         } 
-            //     }
-            //     if(flag&&tempArray[1]!==''){
-            //         this.pos+=cmdwords[1].replace('.','');
-            //         //判断是否出现了文件不存在的情况
-            //     }
-            //     else{
-            //         this.posfile=tempJSON;
-            //         //出现文件不存在的情况
-            //     }
-            //     flag=1;//重置flag
-            //     this.pos=this.pos.replace('/'+tempArray1.pop(),'');//返回上一级
-            //     console.log(this.pos);//调试
-            //     console.log(tempArray1);
-            //     this.posfile = JSON.parse(this.myStorage.getItem(tempArray1[tempArray1.length-1]));//文件指针的位置
-            //     if(tempArray[1]!==''){
-            //         for(i=1;i<tempArray.length;i++){//向下查找目录
-            //             if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-            //                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
-            //             }
-            //             else{
-            //                 this.more=['Error','the','folder','not','exist'];
-            //                 flag=0;
-            //                 break;
-            //             } 
-            //         }
-            //         if(flag){//判断是否出现了文件不存在的情况
-            //             this.pos+=cmdwords[1].replace('..','');
-                
-            //         }
-            //         flag=1;
-            //     }  
-            // }
-            // else{//直接再当前目录下cd的情况
-            //         for(i=0;i<tempArray.length;i++){//向下查找目录
-            //             if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-            //                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置    
-            //             }
-            //         else{
-            //             this.more=['Error','the','folder','not','exist'];
-            //             flag=0;
-            //             break;
-            //             } 
-            //         }
-            //         if(flag){
-            //         this.pos=this.pos+'/'+cmdwords[1];//判断是否出现了文件不存在的情况
-            //         }
-            //         else{
-            //             this.posfile=tempJSON;
-            //         }
-            //         flag=1;//重置flag
-            // }
+            else{//直接再当前目录下cd的情况
+                    tempJSON= this.posfile;
+                    for(i=0;i<tempArray.length;i++){//向下查找目录
+                        if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
+                            this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
+                            tempPos+='/'+tempArray[i];    
+                        }
+                        else{
+                        this.more=['Error','the','folder','not','exist'];
+                        flag=0;
+                        }
+                    }
+                    if(flag===1){
+                        this.pos=tempPos;
+                    }
+                    else{
+                        this.posfile=tempJSON;
+                    }
+                    tempPos='';
+                    tempJSON={};
+                    flag=1;//重置flag
+            }
         }
-        else if(cmdwords.length>1){
-            if(cmdwords[1] in this.posfile&&this.posfile[cmdwords[1]]['type']==='folder'){
-                this.posfile = JSON.parse(this.myStorage.getItem(cmdwords[1]));//文件指针的位置  
-                this.pos+='/'+cmdwords[1];   
+        else if(cmdWords.length>1){
+            if(cmdWords[1] in this.posfile&&this.posfile[cmdWords[1]]['type']==='folder'){
+                this.posfile = JSON.parse(this.myStorage.getItem(cmdWords[1]));//文件指针的位置  
+                this.pos+='/'+cmdWords[1];   
             }
             else{
-                this.more=['Error','the','folder','not','exist'];
+                this.more=['the','folder','not','exist'];
             }
         }
         else{
@@ -452,6 +493,7 @@ window.onload=function(){
         this.more=[];
     }
     var myHandler = new Handler();
+    input.focus();
     input.addEventListener("keydown",function(event){
         if(event.keyCode == 13){
             myHandler.handlecmd(input.value);
