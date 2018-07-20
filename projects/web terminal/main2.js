@@ -1,7 +1,6 @@
 window.onload=function(){
     var result;
     var mydate = new Date();
-    var input=document.getElementById("inputarea");
     var tempJSON={};
     //中间变量 用于提取出一层结构的JSON
     var tempArray=[];
@@ -24,8 +23,10 @@ window.onload=function(){
     };
     var Handler= function(Storage){
         this.cmd ='';
+        this.textarea=document.createElement("textarea");
         this.output = document.getElementById("output");
-        this.inputselector = document.getElementById("input");
+        this.inputarea=document.getElementById("inputarea");
+        this.input = document.getElementById("input");
         this.more=[];//执行命令网页的显示的结果
         this.myStorage=localStorage;
         this.FILE={//文件夹数据结构
@@ -103,7 +104,7 @@ window.onload=function(){
             case cmdList.CAT.value:
                 this.cat(cmdWords);
                 console.log(cmdWords);
-                // this.next();
+                this.next();
                 break;
             case cmdList.ECHO.value:
                 this.echo(cmdWords);
@@ -166,25 +167,55 @@ window.onload=function(){
                 this.more.push(JSON.parse(this.myStorage.getItem(this.posfile[cmdWords[1]]['pointer']))['content']);
             }
             else{
-                this.more=['folder','not','exist']
+                this.more=['file','not','exist']
             }
         }
         else if(cmdWords.length===3){
-            // cat > filename 的形式 UNDO
+            // cat > filename 的形式 
             console.log(cmdWords);
+            console.log(cmdWords[1]==='>');
            if(cmdWords[1]==='>'){
-                if((cmdWords[2] in this.posfile)&&this.posfile[cmdWords[2]['type']==='file']){
-                   this.addinputarea(cmdWords);
+                console.log((cmdWords[2] in this.posfile));
+                console.log(this.posfile[cmdWords[2]]['type']==='file')
+                if((cmdWords[2] in this.posfile)&&this.posfile[cmdWords[2]]['type']==='file'){
+                    this.more.push('\n'+this.addinputarea(cmdWords));
+                    //获取用户信息
+                    console.log(this.more);
+                   tempJSON=JSON.parse(this.myStorage.getItem(cmdWords[2]));
+                   tempJSON['content']=this.more[this.more.length-1];
+                   this.myStorage.setItem(cmdWords[2],JSON.stringify(tempJSON));
+                   //移除输入文本框
+                    this.input.removeChild(this.textarea);
                 }
+                else if((cmdWords[2] in this.posfile)&&this.posfile[cmdWords[2]['type']==='file-ln']){
+                    this.more.push(cmdWords);
+                    this.more.push('\n'+this.addinputarea(cmdWords));
+                     //获取用户信息，更新存储
+                    tempJSON=JSON.parse(this.myStorage.getItem(this.posfile[cmdWords[2]]['pointer']['content']));
+                    tempJSON['content']=this.more[this.more.length-1];
+                    this.myStorage.setItem(this.posfile[cmdWords[2]]['pointer']['content'],JSON.stringify(tempJSON));
+                    //移除输入文本框
+                    this.input.removeChild(this.textarea);
+                 }
            }
         }
         //code
     };
     Handler.prototype.addinputarea= function(cmdWords){
-        var textarea=document.createElement("textarea");
-        textarea.className='input-area';
-        this.inputselector.appendChild(textarea);
-        this.inputselector.focus();
+        this.textarea.id='input-area';
+        this.input.appendChild(this.textarea);
+        this.textarea.focus();
+        var flag=1;
+        console.log(flag);
+        while(flag){
+        this.textarea.addEventListener("keydown",event =>{
+            while(event.ctrlKey&&event.keyCode==67){
+                console.log('debug');
+                flag=0;
+                return this.textarea.value;
+            }
+        });
+     }
         console.log(cmdWords);
     }
     Handler.prototype.echo=function(cmdWords){
@@ -454,7 +485,7 @@ window.onload=function(){
      };
     Handler.prototype.cd=function(cmdWords){
         let i=0;
-        let flag=1;
+        var flag=1;
         console.log(cmdWords);
         if(cmdWords.length>1&&cmdWords[1].match(/\//))//cd有多层次跳跃
         {
@@ -569,7 +600,7 @@ window.onload=function(){
     }
     Handler.prototype.clear = function (){
         this.output.innerHTML='';
-        input.value='';
+        this.inputarea.value='';
     };
     Handler.prototype.next = function(){
         let morehtml='';
@@ -579,20 +610,20 @@ window.onload=function(){
         morehtml='<div>'+morehtml+'</div>';
         let poshtml=document.getElementById("pos");
         let addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
-        ':<span class="icon">'+poshtml.innerHTML+'</span><span>$ '+input.value+'</span></div>'+
+        ':<span class="icon">'+poshtml.innerHTML+'</span><span>$ '+this.inputarea.value+'</span></div>'+
         morehtml;
         this.output.innerHTML=this.output.innerHTML+addcontent;
         poshtml.innerHTML=this.pos;
         // inputHtml.innerHTML=`<span id="username">benjaminfalcon@benjaminfalcon</span>:<span class="icon">${this.pos}</span><span id="dao">&nbsp;$</span>`+
         // '<input type="text" id="inputarea" autocomplete="off" spellcheck="false">'
-        input.value='';
+        this.inputarea.value='';
         this.more=[];
     }
     var myHandler = new Handler();
-    input.focus();
-    input.addEventListener("keydown",function(event){
+    myHandler.inputarea.focus();
+    myHandler.inputarea.addEventListener("keydown",function(event){
         if(event.keyCode == 13){
-            myHandler.handlecmd(input.value);
+            myHandler.handlecmd(myHandler.inputarea.value);
         }
     })
 };
