@@ -9,17 +9,16 @@ window.onload=function(){
     var tempPos1='';
     //中间变量 存储当前的this.pos
     var cmdList={
-        LS:{value:"ls",},
-        RM:{value:"remove",},
-        MKDIR:{value:"mkdir",},
-        TOUCH:{value:"touch"},
-        LN:{value:"ln"},
-        CP:{value:"cp"},
-        RM:{value:"rm"},
-        CAT:{value:"cat"},
-        ECHO:{value:"echo"},
-        CLEAR:{value:"clear"},
-        CD:{value:"cd"}
+        LS:{value:"ls",support:'ls,ls-a,ls-l,ls-la'},
+        RM:{value:"rm",support:'remove file,remove -r folder'},
+        MKDIR:{value:"mkdir",support:'mkdir file'},
+        TOUCH:{value:"touch",support:'touch'},
+        LN:{value:"ln",support:'ln,ln-s'},
+        CP:{value:"cp",support:'cp file|folder,cp ./../../folder ./../../folder'},
+        CAT:{value:"cat",support:'cat file'},
+        ECHO:{value:"echo",support:'echo string'},
+        CLEAR:{value:"clear",support:'clear'},
+        CD:{value:"cd",support:'cd ../.../'}
     };
     var Handler= function(Storage){
         this.cmd ='';
@@ -138,15 +137,17 @@ window.onload=function(){
         var tempString;
         for(key in cmdList){
             for(key2 in cmdList[key]){
-                tempString+=key2+':'+cmdList[key][key2];
+                tempString+=key2+':'+cmdList[key][key2]+'\n';
             }
-            this.more.push(key+':'+tempString+'\n');
+            this.more.push('\n'+key+':'+tempString+'\n\n');
+            tempString='';
         }
     }
     Handler.prototype.rm = function(cmdWords){
         if(cmdWords.length===2&&cmdWords[1]!=='-r'){
             if(cmdWords[1] in this.posfile){
-                if(this.pos==='~'){//根目录情况
+                if(this.pos==='~'){
+                    //根目录情况
                     delete this.posfile[cmdWords[1]];
                     console.log(this.posfile)
                     this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
@@ -186,7 +187,7 @@ window.onload=function(){
             }
         }
         else if(cmdWords.length===3){
-            // cat > filename 的形式 
+            // cat > filename 的形式 UNDO
             console.log(cmdWords);
             console.log(cmdWords[1]==='>');
            if(cmdWords[1]==='>'){
@@ -211,7 +212,7 @@ window.onload=function(){
                     this.myStorage.setItem(this.posfile[cmdWords[2]]['pointer']['content'],JSON.stringify(tempJSON));
                     //移除输入文本框
                     this.input.removeChild(this.textarea);
-                 }
+                 }//UNDO
            }
         }
         //code
@@ -234,27 +235,61 @@ window.onload=function(){
         console.log(cmdWords);
     }
     Handler.prototype.echo=function(cmdWords){
-        console.log(">" in cmdWords);
-        if(!(cmdWords.search('>'))){
+        console.log(cmdWords.indexOf('>'));
+        if(cmdWords.indexOf('>')===-1){
             console.log(cmdWords);
             cmdWords.shift();
             this.more=cmdWords;
         }
-        //未完成
         else if(cmdWords.indexOf('>')===cmdWords.length-2){
-                this.posfile[cmdWords.pop]={'type':'file','authority':'drwxr-xr-x','size':0,
+            console.log()
+            if(cmdWords[cmdWords.length-1].indexOf('/')===-1){
+                console.log(cmdWords.slice(1,length-2));
+                this.posfile[cmdWords[cmdWords.length-1]]={'type':'file','authority':'drwxr-xr-x','size':0,
                 'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
-                this.myStorage.setItem(cmdWords[1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
-                'content':cmdWords[1,cmdWords.length-2].join(),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                this.myStorage.setItem(cmdWords[cmdWords.length-1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
+                'content':cmdWords.slice(1,length-2).join(' '),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
                 if(this.pos==='~'){
                     this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                 }
+            }else if(cmdWords[cmdWords.length-1].match(/([\.|\.\.|\w]\/)+/)){
+                    //需要cd的情况
+                    tempArray=cmdWords[cmdWords.length-1].split('/');
+                    tempArray.pop();
+                    this.more=[''];
+                    nowFile=this.posfile;
+                    nowPosition=this.pos;
+                    console.log(tempArray);
+                    console.log(tempArray.join('/'));
+                    this.cd(['cd',tempArray.join('/')]);
+                    console.log(this.more[0]==='');
+                    console.log(this.more);
+                    if(this.more[0]===''){
+                        this.posfile[cmdWords[cmdWords.length-1].split('/').pop()]={'type':'file','authority':'drwxr-xr-x','size':0,
+                        'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
+                        this.myStorage.setItem(cmdWords[cmdWords.length-1].split('/').pop(),JSON.stringify({'type':'file','authority':'drwxr-xr-x',
+                        'content':cmdWords.slice(1,length-2).join(' '),'size':0,'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}));
+                        if(this.pos==='~'){
+                            this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
+                        }
+                        else{
+                            this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
+                        }
+                        this.more=[];
+                    }else{
+                        this.more=['folder','not','exist'];
+                    }
+                    this.pos=nowPosition;
+                    this.posfile=nowFile;
+            }
 
         }
-        //未完成
+        else{
+            this.more=['Command','not','found'];
+        }
     };
     Handler.prototype.mkdir = function(cmdWords){
         if(cmdWords.length===2){
@@ -567,7 +602,7 @@ window.onload=function(){
                                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
                                 tempPos+='/'+tempArray[i];    
                             }
-                            else{
+                            else if(tempArray[i]!==''){
                             this.more=['Error','the','folder','not','exist'];
                             flag=0;
                             }
@@ -581,7 +616,7 @@ window.onload=function(){
                                 this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));//文件指针的位置 
                                 tempPos+='/'+tempArray[i];    
                             }
-                            else{
+                            else if(tempArray[i]!==''){
                             this.more=['Error','the','folder','not','exist'];
                             flag=0;
                             }
