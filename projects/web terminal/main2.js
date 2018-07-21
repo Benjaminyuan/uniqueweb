@@ -122,12 +122,27 @@ window.onload=function(){
             case '':
                 this.next();
                 break;
+            case '--help':
+                this.help();
+                this.next();
+                break;
             default:
                 this.more=['Commad','not','found!'];
                 this.next();
                 break;
         }
     };
+    Handler.prototype.help= function(){
+        var key;
+        var key2;
+        var tempString;
+        for(key in cmdList){
+            for(key2 in cmdList[key]){
+                tempString+=key2+':'+cmdList[key][key2];
+            }
+            this.more.push(key+':'+tempString+'\n');
+        }
+    }
     Handler.prototype.rm = function(cmdWords){
         if(cmdWords.length===2&&cmdWords[1]!=='-r'){
             if(cmdWords[1] in this.posfile){
@@ -619,6 +634,7 @@ window.onload=function(){
         this.inputarea.value='';
         this.more=[];
     }
+    
     var myHandler = new Handler();
     myHandler.inputarea.focus();
     myHandler.inputarea.addEventListener("keydown",function(event){

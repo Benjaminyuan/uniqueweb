@@ -17,4 +17,7 @@
 // console.log(text3.match(reg));
 // console.log(text4 === 'file'|'file-ln');
 // console.log('~'.split('/'));
-console.log('67'===67);
+// console.log('67'===67);
+var text1=' cat   fiel1 >  file2';
+var reg2=/\s*(cat|echo)\s*(\w+)\s*>\s*(\w+)\s*/g;
+console.log(text1.match(reg2))
