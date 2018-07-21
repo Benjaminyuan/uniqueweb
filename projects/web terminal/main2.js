@@ -474,7 +474,7 @@ window.onload=function(){
         }
 };
     Handler.prototype.ls= function(cmdWords){
-        let key;
+        var key;
         var key1;
         var tempstring='';
         if(cmdWords.length === 1){
@@ -534,7 +534,7 @@ window.onload=function(){
         }   
      };
     Handler.prototype.cd=function(cmdWords){
-        let i=0;
+        var i=0;
         var flag=1;
         console.log(cmdWords);
         if(cmdWords.length>1&&cmdWords[1].match(/\//))//cd有多层次跳跃
@@ -653,13 +653,13 @@ window.onload=function(){
         this.inputarea.value='';
     };
     Handler.prototype.next = function(){
-        let morehtml='';
-        for(let i=0;i<this.more.length;i++){
+        var morehtml='';
+        for(var i=0;i<this.more.length;i++){
             morehtml+='<span>'+this.more[i].replace(/\n/,'<br>')+'&emsp;&emsp;</span>';
         }
         morehtml='<div>'+morehtml+'</div>';
-        let poshtml=document.getElementById("pos");
-        let addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
+        var poshtml=document.getElementById("pos");
+        var addcontent='<div><span id="username">benjaminfalcon@benjaminfalcon</span>'+
         ':<span class="icon">'+poshtml.innerHTML+'</span><span>$ '+this.inputarea.value+'</span></div>'+
         morehtml;
         this.output.innerHTML=this.output.innerHTML+addcontent;
