@@ -21,5 +21,14 @@
 // var text1=' cat   fiel1 >  file2';
 // var reg2=/\s*(cat|echo)\s*(\w+)\s*>\s*(\w+)\s*/g;
 // console.log(text1.match(reg2))
-var cmdWords=['jdfa/']
-console.log(cmdWords[cmdWords.length-1].match(/([\.|\.\.|\w]\/)+/));
+// var cmdWords=['jdfa/']
+// console.log(cmdWords[cmdWords.length-1].match(/([\.|\.\.|\w]\/)+/));
+function getCallStack(){
+    var stack=[];
+    var fun=getCallStack;
+    while(fun = fun.caller){
+        stack.push(fun);
+    }
+    return stack;
+}
+console.log(getCallStack());

@@ -289,12 +289,13 @@ window.onload=function(){
         //调用this.cd()会改变this.pos,this.posfile
         //所以要先保存当前目录信息
         if(cmdWords.length===3&&cmdWords[1] in this.posfile){
-            //cp file|folder folder 形式
+            //cp file|folder(当前目录)) folder(可带路径)) 形式
             this.more=[""];
             this.cd(['cd',cmdWords[2]]);
             //寻找转移目录是否存在
             if(this.more[0]===''){//判断是否存在
             this.posfile[cmdWords[1]]=nowFile[cmdWords[1]];
+            console.log(nowFile);
             //更新目录信息
             tempArray= this.pos.split('/');
             this.myStorage.setItem(tempArray[tempArray.length-1],JSON.stringify(this.posfile));
@@ -617,6 +618,7 @@ window.onload=function(){
         // '<input type="text" id="inputarea" autocomplete="off" spellcheck="false">'
         this.inputarea.value='';
         this.more=[];
+        myHandler.inputarea.focus();
     }
     
     var myHandler = new Handler();
