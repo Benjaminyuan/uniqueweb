@@ -68,51 +68,41 @@ window.onload=function(){
     }   
     Handler.prototype.handlecmd=function(value){
         var cmdWords = value.trim().split(/\s+/);//处理输入的命令字符串
-        console.log(cmdWords);
         switch(cmdWords[0]){
             case cmdList.LS.value:
                 this.ls(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.MKDIR.value:
                 this.mkdir(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.TOUCH.value:
                 this.touch(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.LN.value:
                 this.ln(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.CP.value:
                 this.cp(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.RM.value:
                 this.rm(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.CAT.value:
                 this.cat(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.ECHO.value:
                 this.echo(cmdWords);
-                console.log(cmdWords);
                 this.next();
                 break;
             case cmdList.CLEAR.value:
                 this.clear();
-                console.log(cmdWords);
                 break;
             case cmdList.CD.value:
                 this.cd(cmdWords);
@@ -149,11 +139,9 @@ window.onload=function(){
                 if(this.pos==='~'){
                     //根目录情况
                     delete this.posfile[cmdWords[1]];
-                    console.log(this.posfile)
                     this.myStorage.setItem('FILE',JSON.stringify(this.posfile));
                 }
                 else{
-                    console.log(this.posfile)
                     delete this.posfile[cmdWords[1]];
                     this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                 }
@@ -188,15 +176,10 @@ window.onload=function(){
         }
         else if(cmdWords.length===3){
             // cat > filename 的形式 UNDO
-            console.log(cmdWords);
-            console.log(cmdWords[1]==='>');
            if(cmdWords[1]==='>'){
-                console.log((cmdWords[2] in this.posfile));
-                console.log(this.posfile[cmdWords[2]]['type']==='file')
                 if((cmdWords[2] in this.posfile)&&this.posfile[cmdWords[2]]['type']==='file'){
                     this.more.push('\n'+this.addinputarea(cmdWords));
                     //获取用户信息
-                    console.log(this.more);
                    tempJSON=JSON.parse(this.myStorage.getItem(cmdWords[2]));
                    tempJSON['content']=this.more[this.more.length-1];
                    this.myStorage.setItem(cmdWords[2],JSON.stringify(tempJSON));
@@ -222,29 +205,22 @@ window.onload=function(){
         this.input.appendChild(this.textarea);
         this.textarea.focus();
         var flag=1;
-        console.log(flag);
         while(flag){
         this.textarea.addEventListener("keydown",event =>{
             while(event.ctrlKey&&event.keyCode==67){
-                console.log('debug');
                 flag=0;
                 return this.textarea.value;
             }
         });
      }
-        console.log(cmdWords);
     }
     Handler.prototype.echo=function(cmdWords){
-        console.log(cmdWords.indexOf('>'));
         if(cmdWords.indexOf('>')===-1){
-            console.log(cmdWords);
             cmdWords.shift();
             this.more=cmdWords;
         }
         else if(cmdWords.indexOf('>')===cmdWords.length-2){
-            console.log()
             if(cmdWords[cmdWords.length-1].indexOf('/')===-1){
-                console.log(cmdWords.slice(1,length-2));
                 this.posfile[cmdWords[cmdWords.length-1]]={'type':'file','authority':'drwxr-xr-x','size':0,
                 'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
                 this.myStorage.setItem(cmdWords[cmdWords.length-1],JSON.stringify({'type':'file','authority':'drwxr-xr-x',
@@ -262,11 +238,7 @@ window.onload=function(){
                     this.more=[''];
                     nowFile=this.posfile;
                     nowPosition=this.pos;
-                    console.log(tempArray);
-                    console.log(tempArray.join('/'));
                     this.cd(['cd',tempArray.join('/')]);
-                    console.log(this.more[0]==='');
-                    console.log(this.more);
                     if(this.more[0]===''){
                         this.posfile[cmdWords[cmdWords.length-1].split('/').pop()]={'type':'file','authority':'drwxr-xr-x','size':0,
                         'lastchange':`${mydate.toLocaleString().replace(/,/g,'')}`,'hidden':'false'}
@@ -321,9 +293,6 @@ window.onload=function(){
             this.more=[""];
             this.cd(['cd',cmdWords[2]]);
             //寻找转移目录是否存在
-            console.log(nowPosition===this.posifile);
-            console.log(this.more[0]==='');
-            console.log(this.more);
             if(this.more[0]===''){//判断是否存在
             this.posfile[cmdWords[1]]=nowFile[cmdWords[1]];
             //更新目录信息
@@ -340,24 +309,19 @@ window.onload=function(){
                 this.more[0]='';
                 this.cd(['cd',cmdWords[2]]);
                 //寻找目标目录1是否存在
-                console.log(this.more);
-                console.log(this.more[0]==='');
                 if(this.more[0]===''){
                 //目标目录1存在时进入
                 //先存储目标目录1的信息,然后使this相关的目录信息指向当前目录
                     tempPos1= this.pos;
-                    console.log(this.pos);
                     this.pos=nowPosition;
                     this.posfile=nowFile;
                 //--------------------------------
                 //寻找目标目录2是否存在
                     this.cd(['cd',cmdWords[3]]);
-                    console.log(this.more[0]==='');
                     if(this.more[0]===''){
                         //存在时进入
                         //获取目标文件夹-1的相关信息
                         tempArray=tempPos1.split('/');
-                        console.log(tempArray);
                         if(tempArray.length==2){
                             //上一级为根目录情况
                             tempJSON = JSON.parse(this.myStorage.getItem('FILE'));
@@ -367,10 +331,7 @@ window.onload=function(){
                         } 
                         //--------------------------------------
                         //将信息存入目标目录-2
-                            console.log(tempJSON);
-                            console.log(tempArray[tempArray.length-1]);
                             this.posfile[tempArray[tempArray.length-1]]=tempJSON[tempArray[tempArray.length-1]];
-                            console.log(this.posfile);
                             this.myStorage.setItem(this.pos.split('/').pop(),JSON.stringify(this.posfile));
                         //----------------------------------------------
                     }
@@ -417,7 +378,6 @@ window.onload=function(){
     Handler.prototype.ln = function(cmdWords){
         if(cmdWords.length===3&&!(cmdWords[2] in this.posfile)){
             //创建硬链接
-            console.log(cmdWords[1]  in this.posfile);
             if(cmdWords[1] in this.posfile&&this.posfile[cmdWords[1]]['type']==='file'){
                 //更新当前文件目录
                 this.posfile[cmdWords[2]]={'type':'file-ln','pointer':cmdWords[1],'authority':'drwxr-xr-x',
@@ -432,7 +392,6 @@ window.onload=function(){
                 }
                 //-------------------------------------------------------------------
                 //更新文件的指针数量
-                console.log(this.myStorage.getItem(cmdWords[1]));
                 tempJSON= JSON.parse(this.myStorage.getItem(cmdWords[1]));
                 tempJSON['ln'].push(cmdWords[2]);
                 this.myStorage.setItem(cmdWords[1],tempJSON.stringify);
@@ -506,7 +465,6 @@ window.onload=function(){
                 else{
                     this.more.push('.'+key);
                 }
-                console.log(this.more); 
             }
         }
         else if(cmdWords[1]==='-la'){
@@ -526,7 +484,6 @@ window.onload=function(){
                     this.more.push(tempstring+'.'+key+'\n'); 
                     tempstring=''; 
                 }
-                console.log(this.more); 
             }  
         }
         else{
@@ -536,28 +493,21 @@ window.onload=function(){
     Handler.prototype.cd=function(cmdWords){
         var i=0;
         var flag=1;
-        console.log(cmdWords);
         if(cmdWords.length>1&&cmdWords[1].match(/\//))//cd有多层次跳跃
         {
             tempArray=cmdWords[1].split('/');//cd 的文件目录 
             tempArray1 = this.pos.split('/');//位置
             tempJSON = this.posfile;
             tempPos=this.pos;//暂时存储当前文件信息
-            console.log(tempArray);
             if(tempArray[0]==='.'||tempArray[0]==='..'){//形如 ./Desktop的操作处理
                 for(i=0;i<tempArray.length;i++){//检查合法性
-                    console.log(this.posfile);
-                    console.log(tempArray[i] in this.posfile);
                     if(tempArray[i] in this.posfile&&this.posfile[tempArray[i]]['type']==='folder'){
-                        console.log(tempArray[i]);
                         this.posfile = JSON.parse(this.myStorage.getItem(tempArray[i]));  
                         tempPos+='/'+tempArray[i]; 
                     }
                     else if(tempArray[i]==='..'&&tempPos!='~')
                     {   
                         tempPos=tempPos.replace('/'+tempArray1.pop(),'');//返回上一级
-                        console.log(tempPos);//调试
-                        console.log(tempArray1);
                         if(tempArray1.length==1){
                             //根目录情况
                             this.posfile = JSON.parse(this.myStorage.getItem('FILE'));
@@ -569,7 +519,6 @@ window.onload=function(){
                     else if(tempArray[i]==='.'){
                             //在当前目录，无须改变
                             //调试
-                        console.log(tempArray1);
                     }
                     else if(tempArray[i]!==''){
                         //在./后面有东西但是没有匹配成功时进入
