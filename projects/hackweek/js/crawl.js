@@ -1,0 +1,39 @@
+$(function(){
+    $('#option2-1').attr('checked','checked');
+    $('#opt2-label1').removeClass('btn-default')
+    .addClass('on');
+    $('#option2-1').on('change',function(){
+        $('#opt2-label1').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+    $('#option2-2').on('change',function(){
+        $('#opt2-label2').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+    $('#option2-3').on('change',function(){
+        $('#opt2-label3').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+    $('#option3-1').attr('checked','checked');
+    $('#opt3-label1').removeClass('btn-default')
+    .addClass('on');
+    $('#option3-1').on('change',function(){
+        $('#opt3-label1').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+    $('#option3-2').on('change',function(){
+        $('#opt3-label2').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+    $('#option3-3').on('change',function(){
+        $('#opt3-label3').removeClass('btn-default')
+        .addClass('on').siblings().removeClass('on')
+        .addClass('btn-default');
+    })
+}
+);

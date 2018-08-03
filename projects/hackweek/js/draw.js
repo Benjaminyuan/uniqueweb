@@ -12,16 +12,25 @@ $(document).ready(function(){
     showUpload:true
     });
     $('#option-3').attr("checked",'checked');
+    $('#btn-label-3').removeClass('btn-default').addClass('on');
     $('#option-1').on('change',function(){
         $("#styleimg").attr("src","sumiao.jpeg");
-        $('#option-1').removeClass('btn-default').addClass('on');
+        $('#btn-label-1').removeClass('btn-default').addClass('on').siblings()
+        .removeClass('on')
+        .addClass('btn-default');
     });
     $('#option-2').on('change',function(){
         $("#styleimg").attr("src","comic.jpg");
+        $('#btn-label-2').removeClass('btn-default').addClass('on').siblings()
+        .removeClass('on')
+        .addClass('btn-default');
 
     }).removeClass('btn-default').addClass('on');
     $('#option-3').on('change',function(){
         $("#styleimg").attr("src","vango.jpeg");
+        $('#btn-label-3').removeClass('btn-default').addClass('on').siblings()
+        .removeClass('on')
+        .addClass('btn-default');
 
     }).removeClass('btn-default').addClass('on');
  }
