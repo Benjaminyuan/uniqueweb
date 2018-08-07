@@ -1,0 +1,89 @@
+打开anaconda3
+cd anaconda3/bin
+anaconda-navigator
+安装软件
+sudo apt-get install
+sudo add-apt-repository ppa:
+sudo apt-get update
+
+查看驱动
+sudo ubuntu-drivers
+获得权限
+su boot
+查看设备信息
+lspci | grep VGA / 3D
+关闭图形界面
+sudo service lightdm stop
+打开图形界面
+sudo service lightdm start
+查看安装软件
+dpkg -L xxx
+1、在终端里 apt-get安装的软件：
+安装软件sudo  apt-get install softname1 softname2softname3……
+卸载软件 sudo apt-get remove softname1 softname2 softname3……
+卸载并清除配置sudo  apt-get remove --purgesoftname1
+更新软件信息数据库 sudo apt-get update
+进行系统升级sudo  apt-get upgrade, sudo apt-get distupgrade
+搜索软件包 sudo apt-cache search softname1 softname2 softname3……
+
+2、安装的deb包要用此方法：
+安装deb软件包 dpkg -i xxx.deb
+删除软件包 dpkg -r xxx.deb
+连同配置文件一起删除 dpkg -r --purge xxx.deb
+查看软件包信息 dpkg -info xxx.deb
+查看文件拷贝详情 dpkg -L xxx.deb
+查看系统中已安装软件包信息 dpkg -l
+重新配置软件包 dpkg-reconfigure xxx
+
+4、在“synaptic pakagemanager”里:
+点搜索，输入软件名
+在需要安装或卸载的软件上右击－点标记－最后点应用
+sudo apt-get remove [--purge] xxx
+5、现在还可以在 software center里面,直接卸载。
+删除无效的PPA
+sudo add-apt-repository -r ppa:eugenesan/java
+然后进入 /etc/apt/sources.list.d 目录，将相应 ppa 源的保存文件删除。
+最后同样更新一下
+6、卸载源代码编译的的软件：
+cd 源代码目录
+make clean
+./configure
+（make）
+make uninstall
+rm -rf 目录
+
+清理系统：
+sudo apt-get autoclean
+sudo apt-get clean
+sudo apt-get autoremove
+设置环境变量
+打开~/.bashrc or ~/.bash_profile or ~/.profile or ~/.zshrc
+export
+
+GIT操作
+git add
+git commit 
+git remote add origin https://
+git push -u origin master
+1，强推，即利用强覆盖方式用你本地的代码替代git仓库内的内容
+
+git push -f
+sudo google-chrome --no-sandbox 
+查看磁盘空间
+sudo fdisk -l
+du -f 查看根目录下每个文件的大学
+df -h 人性化的显示出来
+du -ah --max-depth=1 a 表示显示所有，h表示以人能够看懂的方式，max-depth表示深度
+shadowsocks
+Congratulations, Shadowsocks-python server install completed!
+Your Server IP        :  115.156.143.78 
+Your Server Port      :  9888 
+Your Password         :  13873532326yjw 
+Your Encryption Method:  aes-256-gcm 
+配置文件路径：/etc/shadowsocks.json
+启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status
+
+

@@ -1,0 +1,4 @@
+pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pillow
+更改镜像源
+
+

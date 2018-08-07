@@ -23,12 +23,12 @@
 // console.log(text1.match(reg2))
 // var cmdWords=['jdfa/']
 // console.log(cmdWords[cmdWords.length-1].match(/([\.|\.\.|\w]\/)+/));
-function getCallStack(){
-    var stack=[];
-    var fun=getCallStack;
-    while(fun = fun.caller){
-        stack.push(fun);
-    }
-    return stack;
-}
-console.log(getCallStack());
+// function getCallStack(){
+//     var stack=[];
+//     var fun=getCallStack;
+//     while(fun = fun.caller){
+//         stack.push(fun);
+//     }
+//     return stack;
+// }
+// console.log(getCallStack());
