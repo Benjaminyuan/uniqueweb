@@ -1,0 +1,132 @@
+{
+    "code": 1,
+    "msg": {
+        "threadInfo": {
+            "postCount": 2,
+            "subject": " Web组2019春季第0期新人任务",
+            "createDate": "2019-04-05T11:45:27.748Z",
+            "closed": false,
+            "id": "cju405wc209k20782akdxt7rn",
+            "lastDate": "2019-04-05T12:11:41.168Z",
+            "diamond": false,
+            "top": 0,
+            "active": true
+        },
+        "threadAuthor": {
+            "joinTime": 20183,
+            "lastLogin": "2019-07-06T02:52:15.811Z",
+            "qq": "",
+            "isAdmin": false,
+            "avatar": "/api/user/avatar/WangQingYu",
+            "email": "colinwang.0616@gmail.com",
+            "username": "王清雨",
+            "spaceQuota": 200000,
+            "dormitory": "",
+            "signature": "go func(){fmt.Println(\"abcdefg\")}()",
+            "id": "cjsidurse005v07797c2olag7",
+            "className": "",
+            "wechat": "",
+            "mobile": "13651132812",
+            "threads": 1,
+            "major": "",
+            "studentID": "U201814468",
+            "active": true
+        },
+        "firstPost": {
+            "createDate": "2019-04-05T11:45:27.748Z",
+            "isFirst": true,
+            "quote": "-1",
+            "id": "cju405wch09k30782wuzxxcjj",
+            "message": "# Web组2019春季第0期新人任务\n\n欢迎加入联创团队Web组!\n\n**我们组的meetup时间为每周日15:00或19:00，各位记得准时参加**\n\n> 第0期任务主要是熟悉开发中的一些基本技能\n\n*开始时间：本周MU后*\n*ddl: 下一次MU*\n\n## 任务描述：\n\n### 科学上网\n\n没什么好说的，如果有不懂的可以直接询问组内成员。\n\n### 安装、学习Linux\n\n1. 发行版不限，愿意动手折腾的同学推荐Arch Linux（如果安装Arch Linux会对熟悉、使用Linux有极大帮助，前提是你要尽量弄清楚自己输入的**每一行**命令的含义，建议跟随官方wiki安装）\n2. 能使用命令行进行对文件或文件夹的创建、复制、删除、搜索、移动、查看、查找等操作(`ls`, `cd`, `mkdir`, `touch`, `cp`, `rm`, `find`, `mv`, `cat`, `head`, `tail`, `less`, `more`, `echo`, `grep`, `find`)\n3. 能够运用命令行进行简单的网络调试(`ping`, `telnet`, `netstat`, `ifconfig`, `ip`, `wget`, `curl`)\n4. 了解 Linux 文件权限，会修改文件权限、文件所有者(`chmod`, `chown`)\n5. 了解 Linux 环境变量，会使用，设置环境变量\n6. 了解 Linux 守护进程，会使用`systemd`来管理、控制守护进程\n7. 会查看、结束进程(`ps`, `top`, `kill`, `killall`)\n8. 学习文本处理命令(`less`, `more`, `tail`, `cat`, `grep`, `awk`)\n9. 了解发行版的包管理器的使用\n10. *「附加」* 会使用简单的shell来简化工作（见附录1）\n\n### Github的使用\n\n注册一个github账号\n\n学习包括`clone`, `add`, `commit`, `branch`, `merge`(包括同一分支的合并和多分支的合并), `checkout`(转换分支和新建分支的使用), `log`, `fetch`, `pull`, `push`等相关的必要指令，知道github怎么用，有什么用\n\n### 终端文本编辑器的使用\n\n可选项：nano, vim, emacs\n\n> 推荐使用vim，建议使用`$vimtutor`学习vim的基本操作\n\n### 开发环境的搭建\n\n推荐使用成熟的、高效的编辑器VSCode；IDE WebStorm|PyCharm\n\n建议做好美化，提升自己的编码体验\n\n### 其他\n\n学习Markdown的书写\n\n*「附加」*完善熬夜测试题的代码，并将其push到github上\n\n## 注意事项：\n\n- 任务没有先后顺序，建议先学习Markdown的书写以便写Daily Report\n- 我们并不强制你在Linux下开发，但学习有关Linux的知识对未来有益\n- 请发挥一切手段获取知识，特别是问组内队员\n- 想要获取些帮助？看看附录2吧\n\n# 附录1\n\n> shell脚本附加任务\n\n### 任务1\n\n写一个脚本，接受一个参数n，**递归**地计算n的阶乘。\n\n### 任务2\n\n自动根据压缩包后缀名进行解压\n\n- 要求：\n  - 接受一个压缩文件的路径和解压路径，如果未指定，则默认为当前目录\n  - 接受参数`--list`，列出当前支持的解压文件类型\n\n### 任务3\n\n实现自己的ip命令\n\n- 要求：\n  - 不加参数时，显示本机ip\n  - 可以使用-ip指定新的ip地址\n\n### 任务4\n\n获取文件夹下最大的前n个文件\n\n- 要求：\n  - 不加参数时，默认选择当前目录\n  - 通过-n指定个数，通过-dir指定目录\n\n# 附录2\n\n> 一些可能有用的帮助\n\n- [Archlinux Installation guide](<https://wiki.archlinux.org/index.php/Installation_guide>)\n- [ArchWiki](<https://wiki.archlinux.org/>)\n- [简明 VIM 练级攻略](https://coolshell.cn/articles/5426.html)\n- [Systemd 入门教程](<https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html>)\n- [Markdown基本语法](<https://github.com/younghz/Markdown>)",
+            "active": true
+        },
+        "postArr": [
+            {
+                "post": {
+                    "createDate": "2019-04-05T11:46:36.170Z",
+                    "isFirst": false,
+                    "quote": "-1",
+                    "id": "cju407d3x09lf0782ign1zwop",
+                    "message": "@江军 @来锐 @王瑾 @聂思谦 ",
+                    "active": true
+                },
+                "user": {
+                    "joinTime": 20183,
+                    "lastLogin": "2019-07-06T02:52:15.811Z",
+                    "qq": "",
+                    "isAdmin": false,
+                    "avatar": "/api/user/avatar/WangQingYu",
+                    "email": "colinwang.0616@gmail.com",
+                    "username": "王清雨",
+                    "spaceQuota": 200000,
+                    "dormitory": "",
+                    "signature": "go func(){fmt.Println(\"abcdefg\")}()",
+                    "id": "cjsidurse005v07797c2olag7",
+                    "className": "",
+                    "wechat": "",
+                    "mobile": "13651132812",
+                    "threads": 1,
+                    "major": "",
+                    "studentID": "U201814468",
+                    "active": true
+                },
+                "group": [
+                    {
+                        "id": "cjsidton6000r0779h9kn60jh",
+                        "key": 2,
+                        "name": "Web",
+                        "color": "cyan"
+                    }
+                ],
+                "quote": null
+            },
+            {
+                "post": {
+                    "createDate": "2019-04-05T12:11:41.168Z",
+                    "isFirst": false,
+                    "quote": "-1",
+                    "id": "cju413md50a1k07820bodmzqa",
+                    "message": "感觉还行 （）",
+                    "active": true
+                },
+                "user": {
+                    "joinTime": 20183,
+                    "lastLogin": "2019-07-07T01:37:48.809Z",
+                    "qq": "935319340",
+                    "isAdmin": true,
+                    "avatar": "/api/user/avatar/YangZiYue",
+                    "email": "",
+                    "username": "杨子越",
+                    "spaceQuota": 200000,
+                    "dormitory": "韵苑16",
+                    "signature": "我是一只小白兔?～",
+                    "id": "cjsidusyd006b07798ma2v0s2",
+                    "className": "",
+                    "wechat": "",
+                    "mobile": "18617826281",
+                    "threads": 7,
+                    "major": "",
+                    "studentID": "U201816816",
+                    "active": true
+                },
+                "group": [
+                    {
+                        "id": "cjsidton6000r0779h9kn60jh",
+                        "key": 2,
+                        "name": "Web",
+                        "color": "cyan"
+                    }
+                ],
+                "quote": null
+            }
+        ],
+        "attachArr": [],
+        "forumInfo": {
+            "name": "新人任务",
+            "description": "新人任务的发布与交付",
+            "icon": "solution|#47a189",
+            "id": "cjsijiti600nu0766fxpqj49w",
+            "threads": 202
+        }
+    }
+}
